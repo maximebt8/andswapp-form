@@ -1,0 +1,2409 @@
+<!doctype html>
+<html lang="fr">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Créer mon profil &amp;SWAPP</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+        body {
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 50%, #f8fafc 100%);
+            min-height: 100%;
+        }
+        
+        html, body {
+            height: 100%;
+        }
+        
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .step-card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(46, 89, 65, 0.1);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        
+        .step-header {
+            background: linear-gradient(135deg, #2E5941 0%, #3a6b4f 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .step-content {
+            padding: 2rem;
+        }
+        
+        .input-field {
+            background: white;
+            border: 2px solid #f3f4f6;
+            border-radius: 12px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            width: 100%;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: #2E5941;
+            box-shadow: 0 0 0 4px rgba(46, 89, 65, 0.1);
+        }
+        
+        .input-field.error {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+        }
+        
+        .btn-primary {
+            background: #FFCC00;
+            color: #2E5941;
+            border: none;
+            border-radius: 12px;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+            font-size: 16px;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            background: #e6b800;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 204, 0, 0.4);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #2E5941;
+            border: 2px solid #A5C1AA;
+            border-radius: 12px;
+            padding: 1rem 2rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .btn-secondary:hover {
+            border-color: #2E5941;
+            background: #f0f9f2;
+            transform: translateY(-1px);
+        }
+        
+        .btn-ai {
+            background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 0.25rem 0.5rem;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            opacity: 0.8;
+        }
+        
+        .btn-ai:hover {
+            background: linear-gradient(135deg, #7C3AED 0%, #9333EA 100%);
+            opacity: 1;
+            transform: translateY(-1px);
+        }
+        
+        .btn-ai:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .progress-bar {
+            background: #e5e7eb;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #FFCC00 0%, #ffd700 100%);
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+        
+        .required::after {
+            content: ' *';
+            color: #ef4444;
+        }
+        
+        .error-message {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        .selection-card {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .selection-card:hover {
+            border-color: #d1d5db;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+        
+        .selection-card.selected {
+            border-color: #2E5941;
+            background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
+            box-shadow: 0 8px 25px rgba(46, 89, 65, 0.12);
+            transform: translateY(-2px);
+        }
+        
+        .selection-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: #2E5941;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .textarea-field {
+            background: white;
+            border: 2px solid #f3f4f6;
+            border-radius: 12px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            width: 100%;
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .textarea-field:focus {
+            outline: none;
+            border-color: #2E5941;
+            box-shadow: 0 0 0 4px rgba(46, 89, 65, 0.1);
+        }
+        
+        .textarea-field.error {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+        }
+        
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 24px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+        
+        .emoji-large {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .flexible-option {
+            transition: all 0.3s ease;
+        }
+        
+        .flexible-option.selected {
+            border-color: #2E5941;
+            background: #f0fdf4;
+        }
+
+        .date-range {
+            position: relative;
+        }
+
+        .remove-date-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .remove-date-btn:hover {
+            background: #dc2626;
+        }
+
+        .ai-suggestion {
+            background: linear-gradient(135deg, #f3e8ff 0%, #faf5ff 100%);
+            border: 2px solid #e9d5ff;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .ai-suggestion.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .ai-suggestion h4 {
+            color: #7c3aed;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .ai-suggestion p {
+            color: #6b46c1;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 0.75rem;
+        }
+
+        .ai-suggestion button {
+            background: #8b5cf6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            cursor: pointer;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            transition: background 0.2s;
+        }
+
+        .ai-suggestion button:hover {
+            background: #7c3aed;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .character-count {
+            font-size: 0.75rem;
+            color: #6b7280;
+            text-align: right;
+            margin-top: 0.25rem;
+        }
+
+        .character-count.warning {
+            color: #f59e0b;
+        }
+
+        .character-count.error {
+            color: #ef4444;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #374151;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.875rem;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .field-with-ai {
+            position: relative;
+        }
+
+        .ai-button-container {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            z-index: 10;
+        }
+
+        .smart-suggestions {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .smart-suggestions h5 {
+            color: #0369a1;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .smart-suggestions ul {
+            color: #0c4a6e;
+            margin-left: 1rem;
+        }
+
+        .smart-suggestions li {
+            margin-bottom: 0.25rem;
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="min-h-full"><!-- Header -->
+   <div class="bg-white border-b border-gray-100 sticky top-0 z-40">
+    <div class="form-container py-4 px-4">
+     <div class="flex items-center justify-between">
+      <div class="flex items-center">
+       <div class="text-2xl font-bold text-green-800">
+        &amp;SWAPP
+       </div>
+       <div class="ml-4 text-gray-600"><span class="text-sm">✨ Création de profil</span>
+       </div>
+      </div>
+      <div class="text-sm text-gray-500">
+       Étape <span id="current-step">1</span> sur 4
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="form-container py-8 px-4"><!-- Progress Bar -->
+    <div class="mb-8">
+     <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width: 25%"></div>
+     </div>
+    </div><!-- Étape 1: Info appartement -->
+    <div class="step-card" id="step-1">
+     <div class="step-header">
+      <div class="emoji-large">
+       🏡
+      </div>
+      <h2 class="text-2xl font-bold mb-2">Info sur mon appartement</h2>
+      <p class="text-green-100">Présentez votre logement aux futurs swappers</p>
+     </div>
+     <div class="step-content">
+      <div class="space-y-6"><!-- Localisation -->
+       <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-4">📍 Localisation</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+         <div><label for="country" class="block text-sm font-medium text-gray-700 mb-2 required">Pays</label> <select id="country" class="input-field" required> <option value="">Sélectionner un pays</option> <option value="FR">France</option> <option value="ES">Espagne</option> <option value="IT">Italie</option> <option value="DE">Allemagne</option> <option value="UK">Royaume-Uni</option> <option value="US">États-Unis</option> <option value="CA">Canada</option> <option value="PT">Portugal</option> <option value="NL">Pays-Bas</option> <option value="BE">Belgique</option> <option value="CH">Suisse</option> <option value="AT">Autriche</option> <option value="SE">Suède</option> <option value="NO">Norvège</option> <option value="DK">Danemark</option> <option value="FI">Finlande</option> <option value="IE">Irlande</option> <option value="GR">Grèce</option> <option value="CZ">République tchèque</option> <option value="PL">Pologne</option> <option value="HU">Hongrie</option> <option value="HR">Croatie</option> <option value="SI">Slovénie</option> <option value="SK">Slovaquie</option> <option value="RO">Roumanie</option> <option value="BG">Bulgarie</option> <option value="LT">Lituanie</option> <option value="LV">Lettonie</option> <option value="EE">Estonie</option> <option value="MT">Malte</option> <option value="CY">Chypre</option> <option value="LU">Luxembourg</option> <option value="IS">Islande</option> <option value="LI">Liechtenstein</option> <option value="MC">Monaco</option> <option value="SM">Saint-Marin</option> <option value="VA">Vatican</option> <option value="AD">Andorre</option> <option value="AU">Australie</option> <option value="NZ">Nouvelle-Zélande</option> <option value="JP">Japon</option> <option value="KR">Corée du Sud</option> <option value="SG">Singapour</option> <option value="HK">Hong Kong</option> <option value="TW">Taïwan</option> <option value="MY">Malaisie</option> <option value="TH">Thaïlande</option> <option value="VN">Vietnam</option> <option value="PH">Philippines</option> <option value="ID">Indonésie</option> <option value="IN">Inde</option> <option value="CN">Chine</option> <option value="MX">Mexique</option> <option value="BR">Brésil</option> <option value="AR">Argentine</option> <option value="CL">Chili</option> <option value="CO">Colombie</option> <option value="PE">Pérou</option> <option value="UY">Uruguay</option> <option value="PY">Paraguay</option> <option value="BO">Bolivie</option> <option value="EC">Équateur</option> <option value="VE">Venezuela</option> <option value="GY">Guyana</option> <option value="SR">Suriname</option> <option value="GF">Guyane française</option> <option value="ZA">Afrique du Sud</option> <option value="MA">Maroc</option> <option value="TN">Tunisie</option> <option value="DZ">Algérie</option> <option value="EG">Égypte</option> <option value="KE">Kenya</option> <option value="TZ">Tanzanie</option> <option value="UG">Ouganda</option> <option value="RW">Rwanda</option> <option value="ET">Éthiopie</option> <option value="GH">Ghana</option> <option value="NG">Nigeria</option> <option value="SN">Sénégal</option> <option value="CI">Côte d'Ivoire</option> <option value="ML">Mali</option> <option value="BF">Burkina Faso</option> <option value="NE">Niger</option> <option value="TD">Tchad</option> <option value="CM">Cameroun</option> <option value="CF">République centrafricaine</option> <option value="GA">Gabon</option> <option value="CG">République du Congo</option> <option value="CD">République démocratique du Congo</option> <option value="AO">Angola</option> <option value="ZM">Zambie</option> <option value="ZW">Zimbabwe</option> <option value="BW">Botswana</option> <option value="NA">Namibie</option> <option value="SZ">Eswatini</option> <option value="LS">Lesotho</option> <option value="MG">Madagascar</option> <option value="MU">Maurice</option> <option value="SC">Seychelles</option> <option value="KM">Comores</option> <option value="DJ">Djibouti</option> <option value="SO">Somalie</option> <option value="ER">Érythrée</option> <option value="SD">Soudan</option> <option value="SS">Soudan du Sud</option> <option value="LY">Libye</option> <option value="MR">Mauritanie</option> <option value="GM">Gambie</option> <option value="GW">Guinée-Bissau</option> <option value="GN">Guinée</option> <option value="SL">Sierra Leone</option> <option value="LR">Liberia</option> <option value="TG">Togo</option> <option value="BJ">Bénin</option> <option value="CV">Cap-Vert</option> <option value="ST">Sao Tomé-et-Principe</option> <option value="GQ">Guinée équatoriale</option> <option value="IL">Israël</option> <option value="PS">Palestine</option> <option value="JO">Jordanie</option> <option value="LB">Liban</option> <option value="SY">Syrie</option> <option value="IQ">Irak</option> <option value="IR">Iran</option> <option value="AF">Afghanistan</option> <option value="PK">Pakistan</option> <option value="BD">Bangladesh</option> <option value="LK">Sri Lanka</option> <option value="MV">Maldives</option> <option value="BT">Bhoutan</option> <option value="NP">Népal</option> <option value="MM">Myanmar</option> <option value="LA">Laos</option> <option value="KH">Cambodge</option> <option value="BN">Brunei</option> <option value="TL">Timor oriental</option> <option value="PG">Papouasie-Nouvelle-Guinée</option> <option value="SB">Îles Salomon</option> <option value="VU">Vanuatu</option> <option value="FJ">Fidji</option> <option value="NC">Nouvelle-Calédonie</option> <option value="PF">Polynésie française</option> <option value="WF">Wallis-et-Futuna</option> <option value="TO">Tonga</option> <option value="WS">Samoa</option> <option value="KI">Kiribati</option> <option value="TV">Tuvalu</option> <option value="NR">Nauru</option> <option value="PW">Palaos</option> <option value="FM">États fédérés de Micronésie</option> <option value="MH">Îles Marshall</option> <option value="CK">Îles Cook</option> <option value="NU">Niue</option> <option value="TK">Tokelau</option> <option value="AS">Samoa américaines</option> <option value="GU">Guam</option> <option value="MP">Îles Mariannes du Nord</option> <option value="VI">Îles Vierges américaines</option> <option value="PR">Porto Rico</option> <option value="DO">République dominicaine</option> <option value="HT">Haïti</option> <option value="JM">Jamaïque</option> <option value="CU">Cuba</option> <option value="BS">Bahamas</option> <option value="BB">Barbade</option> <option value="TT">Trinité-et-Tobago</option> <option value="GD">Grenade</option> <option value="VC">Saint-Vincent-et-les-Grenadines</option> <option value="LC">Sainte-Lucie</option> <option value="DM">Dominique</option> <option value="AG">Antigua-et-Barbuda</option> <option value="KN">Saint-Kitts-et-Nevis</option> <option value="AI">Anguilla</option> <option value="MS">Montserrat</option> <option value="VG">Îles Vierges britanniques</option> <option value="TC">Îles Turques-et-Caïques</option> <option value="KY">Îles Caïmans</option> <option value="BM">Bermudes</option> <option value="GL">Groenland</option> <option value="FO">Îles Féroé</option> <option value="SJ">Svalbard et Jan Mayen</option> <option value="AX">Îles Åland</option> <option value="GI">Gibraltar</option> <option value="JE">Jersey</option> <option value="GG">Guernesey</option> <option value="IM">Île de Man</option> <option value="FK">Îles Malouines</option> <option value="GS">Géorgie du Sud-et-les Îles Sandwich du Sud</option> <option value="SH">Sainte-Hélène, Ascension et Tristan da Cunha</option> <option value="IO">Territoire britannique de l'océan Indien</option> <option value="TF">Terres australes et antarctiques françaises</option> <option value="HM">Îles Heard-et-MacDonald</option> <option value="CC">Îles Cocos</option> <option value="CX">Île Christmas</option> <option value="NF">Île Norfolk</option> <option value="PN">Îles Pitcairn</option> <option value="RE">La Réunion</option> <option value="YT">Mayotte</option> <option value="GP">Guadeloupe</option> <option value="MQ">Martinique</option> <option value="BL">Saint-Barthélemy</option> <option value="MF">Saint-Martin</option> <option value="PM">Saint-Pierre-et-Miquelon</option> <option value="AQ">Antarctique</option> <option value="BV">Île Bouvet</option> <option value="EH">Sahara occidental</option> <option value="UM">Îles mineures éloignées des États-Unis</option> </select>
+          <div class="error-message" id="country-error">
+           Veuillez sélectionner un pays
+          </div>
+         </div>
+         <div><label for="city" class="block text-sm font-medium text-gray-700 mb-2 required">Ville</label> <input type="text" id="city" class="input-field" placeholder="Ex: Paris, Lyon, Marseille..." required>
+          <div class="error-message" id="city-error">
+           Veuillez saisir votre ville
+          </div>
+         </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+         <div><label for="region" class="block text-sm font-medium text-gray-700 mb-2 required">Région</label> <input type="text" id="region" class="input-field" placeholder="Ex: Île-de-France, Californie..." required>
+          <div class="error-message" id="region-error">
+           Veuillez saisir votre région
+          </div>
+         </div>
+         <div><label for="postal-code" class="block text-sm font-medium text-gray-700 mb-2 required">Code postal</label> <input type="text" id="postal-code" class="input-field" placeholder="Ex: 75001" required>
+          <div class="error-message" id="postal-code-error">
+           Veuillez saisir votre code postal
+          </div>
+         </div>
+        </div>
+       </div><!-- Caractéristiques du logement -->
+       <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-4">🏠 Caractéristiques du logement</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+         <div><label class="block text-sm font-medium text-gray-700 mb-2 required">Type de logement</label> <select id="housing-type" class="input-field" required> <option value="">Sélectionner</option> <option value="apartment">Appartement</option> <option value="house">Maison</option> <option value="room">Chambre</option> <option value="shared">Colocation complète</option> </select>
+          <div class="error-message" id="housing-type-error">
+           Veuillez sélectionner le type de logement
+          </div>
+         </div>
+         <div><label for="surface" class="block text-sm font-medium text-gray-700 mb-2 required">Superficie (m²)</label> <input type="number" id="surface" class="input-field" placeholder="Ex: 65" min="10" max="500" required>
+          <div class="error-message" id="surface-error">
+           Veuillez saisir la superficie
+          </div>
+         </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+         <div><label class="block text-sm font-medium text-gray-700 mb-2 required">Nombre de chambres</label> <select id="bedrooms" class="input-field" required> <option value="">Sélectionner</option> <option value="0">Studio</option> <option value="1">1 chambre</option> <option value="2">2 chambres</option> <option value="3">3 chambres</option> <option value="4">4 chambres</option> <option value="5+">5+ chambres</option> </select>
+          <div class="error-message" id="bedrooms-error">
+           Veuillez sélectionner le nombre de chambres
+          </div>
+         </div>
+         <div><label class="block text-sm font-medium text-gray-700 mb-2 required">Nombre de couchages</label> <select id="sleeping-spots" class="input-field" required> <option value="">Sélectionner</option> <option value="1">1 personne</option> <option value="2">2 personnes</option> <option value="4">4 personnes</option> <option value="6">6 personnes</option> <option value="8+">8+ personnes</option> </select>
+          <div class="error-message" id="sleeping-spots-error">
+           Veuillez sélectionner le nombre de couchages
+          </div>
+         </div>
+        </div>
+       </div><!-- Description du logement avec IA -->
+       <div class="field-with-ai">
+        <div class="flex items-center justify-between mb-2"><label for="housing-description" class="block text-sm font-medium text-gray-700 required"> Description de mon logement <span class="tooltip"> <span class="text-blue-500">ℹ️</span> <span class="tooltiptext">Décrivez votre logement de manière attractive pour séduire les futurs swappers</span> </span> </label> <button type="button" class="text-sm text-gray-500 hover:text-green-600 transition-colors cursor-pointer" onclick="openHousingAIModal()" title="Aide à la rédaction"> ⭐ Aide </button>
+        </div><textarea id="housing-description" class="textarea-field" placeholder="Décrivez votre logement : ambiance, points forts, quartier..." required maxlength="500"></textarea>
+        <div class="character-count" id="housing-description-count">
+         0/500 caractères
+        </div>
+        <div class="error-message" id="housing-description-error">
+         Veuillez décrire votre logement
+        </div><!-- Exemples d'inspiration -->
+        <div class="mt-3"><button type="button" class="btn-secondary text-sm" onclick="showHousingExamples()"> 💡 Voir des exemples d'annonces </button>
+        </div>
+        <div class="ai-suggestion" id="housing-ai-suggestion">
+         <h4>🤖 Suggestions IA</h4>
+         <p id="housing-ai-text"></p><button type="button" onclick="useAISuggestion('housing-description', 'housing-ai-text')">Utiliser cette suggestion</button> <button type="button" onclick="hideAISuggestion('housing-ai-suggestion')">Fermer</button>
+        </div><!-- Modal aide IA pour description logement -->
+        <div id="housing-ai-modal" class="modal">
+         <div class="modal-content max-w-2xl">
+          <h3 class="text-xl font-bold text-green-800 mb-4">⭐ Aide à la rédaction de votre annonce</h3>
+          <p class="text-gray-600 mb-6">Répondez à quelques questions pour générer une description attractive de votre logement</p>
+          <div class="space-y-4 mb-6">
+           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div><label class="block text-sm font-medium text-green-700 mb-2">Ambiance du logement</label> <select id="modal-housing-ambiance" class="input-field text-sm"> <option value="">Choisir...</option> <option value="moderne">Moderne et épuré</option> <option value="cosy">Cosy et chaleureux</option> <option value="lumineux">Lumineux et spacieux</option> <option value="authentique">Authentique et charme</option> <option value="design">Design et contemporain</option> </select>
+            </div>
+            <div><label class="block text-sm font-medium text-green-700 mb-2">Point fort principal</label> <select id="modal-housing-strength" class="input-field text-sm"> <option value="">Choisir...</option> <option value="vue">Belle vue</option> <option value="localisation">Emplacement idéal</option> <option value="calme">Très calme</option> <option value="transport">Proche transports</option> <option value="espace">Grand espace</option> <option value="terrasse">Terrasse/balcon</option> </select>
+            </div>
+            <div><label class="block text-sm font-medium text-green-700 mb-2">Type de quartier</label> <select id="modal-housing-neighborhood" class="input-field text-sm"> <option value="">Choisir...</option> <option value="centre">Centre-ville animé</option> <option value="residentiel">Résidentiel calme</option> <option value="branche">Branché et culturel</option> <option value="authentique">Authentique et local</option> <option value="nature">Proche nature</option> </select>
+            </div>
+            <div><label class="block text-sm font-medium text-green-700 mb-2">Équipement spécial</label> <input type="text" id="modal-housing-special" class="input-field text-sm" placeholder="Ex: piscine, jardin...">
+            </div>
+            <div><label class="block text-sm font-medium text-green-700 mb-2">Ce qui rend votre logement unique</label> <input type="text" id="modal-housing-unique" class="input-field text-sm" placeholder="Ex: vue panoramique, déco vintage...">
+            </div>
+            <div><label class="block text-sm font-medium text-green-700 mb-2">Activités à proximité</label> <input type="text" id="modal-housing-activities" class="input-field text-sm" placeholder="Ex: musées, parcs, restaurants...">
+            </div>
+           </div>
+          </div>
+          <div class="flex gap-3 mb-4"><button class="btn-primary flex-1" onclick="generateHousingDescriptionFromModal()" id="modal-housing-generate-btn"> ✨ Générer ma description </button> <button class="btn-secondary" onclick="closeHousingAIModal()"> Annuler </button>
+          </div><!-- Zone de résultat -->
+          <div id="housing-ai-result" class="hidden mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+           <h4 class="font-semibold text-green-800 mb-2">🎉 Votre description générée :</h4>
+           <p id="housing-ai-generated-text" class="text-gray-700 mb-3 leading-relaxed"></p>
+           <div class="flex gap-2"><button class="btn-primary text-sm" onclick="useGeneratedHousingDescription()">Utiliser cette description</button> <button class="btn-secondary text-sm" onclick="regenerateHousingDescription()">Générer une autre</button>
+           </div>
+          </div>
+         </div>
+        </div><!-- Modal exemples -->
+        <div id="housing-examples-modal" class="modal">
+         <div class="modal-content max-w-4xl">
+          <h3 class="text-xl font-bold mb-4">💡 Exemples d'annonces inspirantes</h3>
+          <div class="space-y-4 max-h-96 overflow-y-auto">
+           <div class="bg-gray-50 p-3 rounded-lg">
+            <h5 class="font-semibold text-green-700 mb-2">Appartement moderne - Paris</h5>
+            <p class="text-sm text-gray-700">"Magnifique appartement lumineux au cœur du Marais ! Récemment rénové avec goût, il offre tout le confort moderne dans un quartier historique plein de charme. À 2 minutes du métro, parfait pour explorer Paris tout en profitant d'un havre de paix."</p><button class="btn-ai mt-2" onclick="copyExample(this.previousElementSibling.textContent)">Copier</button>
+           </div>
+           <div class="bg-gray-50 p-3 rounded-lg">
+            <h5 class="font-semibold text-green-700 mb-2">Maison avec jardin - Lyon</h5>
+            <p class="text-sm text-gray-700">"Charmante maison avec jardin dans un quartier résidentiel calme de Lyon. Idéale pour se ressourcer après une journée de découverte ! Proche des transports, vous serez au centre-ville en 15 minutes. Parfait pour les amoureux de tranquillité."</p><button class="btn-ai mt-2" onclick="copyExample(this.previousElementSibling.textContent)">Copier</button>
+           </div>
+           <div class="bg-gray-50 p-3 rounded-lg">
+            <h5 class="font-semibold text-green-700 mb-2">Studio cosy - Bordeaux</h5>
+            <p class="text-sm text-gray-700">"Studio cosy et bien équipé dans le quartier des Chartrons. Déco soignée, cuisine fonctionnelle et ambiance chaleureuse garantie ! À deux pas des meilleurs bars à vin et restaurants de Bordeaux. L'endroit parfait pour découvrir l'art de vivre bordelais."</p><button class="btn-ai mt-2" onclick="copyExample(this.previousElementSibling.textContent)">Copier</button>
+           </div>
+          </div>
+          <div class="flex justify-end mt-4"><button class="btn-secondary" onclick="closeHousingExamples()">Fermer</button>
+          </div>
+         </div>
+        </div>
+       </div><!-- Équipements essentiels -->
+       <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-4">🏠 Équipements essentiels</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3"><label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" class="equipment-checkbox" value="wifi"> <span class="text-sm">📶 Wifi</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" class="equipment-checkbox" value="workspace"> <span class="text-sm">💻 Espace de travail</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" class="equipment-checkbox" value="kitchen"> <span class="text-sm">🍳 Cuisine équipée</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" class="equipment-checkbox" value="washing-machine"> <span class="text-sm">🧺 Machine à laver</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" class="equipment-checkbox" value="balcony"> <span class="text-sm">🌿 Balcon / terrasse</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" class="equipment-checkbox" value="parking"> <span class="text-sm">🚗 Parking</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" class="equipment-checkbox" value="pets-allowed"> <span class="text-sm">🐾 Animaux acceptés</span> </label>
+        </div>
+        <div class="mt-4"><label class="block text-sm font-medium text-gray-700 mb-2">Autre équipement différenciant</label> <input type="text" id="other-equipment" class="input-field" placeholder="Ex: Piscine, Vélo, Piano, Climatisation...">
+         <p class="text-xs text-gray-500 mt-1">💡 Mentionnez uniquement les équipements spéciaux qui vous distinguent</p>
+        </div>
+       </div><!-- Obligations -->
+       <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-4">📋 Obligations pour la personne qui vient chez moi (facultatif)</h3>
+        <p class="text-sm text-gray-600 mb-4">💡 Précisez ce que vous attendez de votre swapper pendant son séjour</p>
+        <div class="space-y-3"><label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" class="obligation-checkbox" value="pet-care"> <span class="text-sm">🐾 Garder mon animal</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" class="obligation-checkbox" value="plants"> <span class="text-sm">🌱 Arroser mes plantes</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" class="obligation-checkbox" value="mail"> <span class="text-sm">📬 Relever le courrier</span> </label>
+        </div>
+        <div class="mt-4"><label class="block text-sm font-medium text-gray-700 mb-2">Autres obligations ou instructions</label> <textarea id="other-obligations" class="textarea-field" placeholder="Ex: Arroser le jardin, sortir les poubelles le mardi..." style="min-height: 80px;"></textarea>
+        </div>
+       </div><!-- Photos -->
+       <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-4">📷 Photos de mon logement</h3>
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+         <div class="text-center">
+          <div class="text-4xl mb-2">
+           📸
+          </div>
+          <h4 class="font-semibold text-blue-800 mb-2">Photos demandées dans un second temps</h4>
+          <p class="text-sm text-blue-700 mb-3">Nous vous demanderons d'ajouter vos photos après la création du profil pour optimiser vos chances de match !</p>
+          <div class="bg-white rounded-lg p-3 border border-blue-300">
+           <p class="text-sm text-gray-700">💡 <strong>Conseil :</strong> Préparez 5-8 photos de qualité de votre logement (salon, chambre, cuisine, salle de bain, extérieur si applicable)</p>
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="flex justify-end"><button type="button" class="btn-primary" onclick="validateAndNext(1)"> Continuer → </button>
+       </div>
+      </div>
+     </div>
+    </div><!-- Étape 2: Style d'échange -->
+    <div class="step-card hidden" id="step-2">
+     <div class="step-header">
+      <div class="emoji-large">
+       🔄
+      </div>
+      <h2 class="text-2xl font-bold mb-2">Mon style d'échange</h2>
+      <p class="text-green-100">Définissez vos préférences d'échange d'appartement</p>
+     </div>
+     <div class="step-content">
+      <div class="space-y-6"><!-- Encart explicatif -->
+       <div class="bg-gradient-to-r from-green-50 to-yellow-50 border border-green-200 rounded-lg p-4">
+        <h3 class="font-semibold text-green-800 mb-2">🎯 Pourquoi ces informations ?</h3>
+        <p class="text-sm text-green-700 mb-2">L'objectif est de vous mettre en relation avec des personnes qui correspondent à vos attentes en matière d'échange d'appartement.</p>
+        <p class="text-sm text-green-700">💡 Plus vous êtes précis sur vos préférences, plus &amp;SWAPP pourra vous proposer des matches compatibles et réussir votre expérience d'échange !</p>
+       </div>
+       <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-4 required">Style d'échange</h3>
+        <div class="space-y-4">
+         <div class="selection-card" data-exchange-style="reciprocal">
+          <div class="flex items-center">
+           <div class="text-2xl mr-4">
+            🔄
+           </div>
+           <div>
+            <h4 class="font-semibold">Échange réciproque</h4>
+            <p class="text-sm text-gray-600">Chacun séjourne chez l'autre aux mêmes dates</p>
+           </div>
+          </div>
+         </div>
+         <div class="selection-card" data-exchange-style="delayed">
+          <div class="flex items-center">
+           <div class="text-2xl mr-4">
+            ⏳
+           </div>
+           <div>
+            <h4 class="font-semibold">Échange décalé</h4>
+            <p class="text-sm text-gray-600">Accueillir pendant votre absence, séjourner plus tard</p>
+           </div>
+          </div>
+         </div>
+         <div class="selection-card" data-exchange-style="both">
+          <div class="flex items-center">
+           <div class="text-2xl mr-4">
+            ⚖️
+           </div>
+           <div>
+            <h4 class="font-semibold">Ouvert aux deux</h4>
+            <p class="text-sm text-gray-600">Flexible selon les opportunités</p>
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class="error-message" id="exchange-style-error">
+         Veuillez sélectionner un style d'échange
+        </div>
+       </div><!-- Dates de disponibilité (conditionnelles) -->
+       <div id="availability-section" class="hidden">
+        <h3 class="text-lg font-semibold text-gray-700 mb-4 required">📅 Dates où mon logement sera libre pour accueillir</h3>
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
+         <p class="text-sm text-blue-700">💡 <strong>Conseil :</strong> Ajoutez un maximum de créneaux pour augmenter vos chances de match ! Vous pourrez toujours en ajouter d'autres plus tard dans votre profil.</p>
+        </div>
+        <p class="text-sm text-gray-600 mb-4">Sélectionnez les périodes où votre logement sera disponible (vous ne serez pas chez vous)</p>
+        <div id="availability-ranges">
+         <div class="date-range bg-gray-50 border border-gray-200 rounded-lg p-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+           <div><label class="block text-sm font-medium text-gray-600 mb-2">Du</label> <input type="date" id="availability-start" class="input-field availability-start">
+           </div>
+           <div><label class="block text-sm font-medium text-gray-600 mb-2">Au</label> <input type="date" id="availability-end" class="input-field availability-end">
+           </div>
+          </div>
+         </div>
+        </div><button type="button" class="btn-secondary mt-3" onclick="addAvailabilityRange()"> ➕ Ajouter une autre période </button>
+        <div class="error-message" id="availability-error">
+         Veuillez sélectionner vos dates de disponibilité
+        </div>
+       </div>
+       <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-4 required">👥 Avec qui je voyage</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+         <div class="selection-card" data-travel-with="alone">
+          <div class="flex items-center">
+           <div class="text-2xl mr-4">
+            👤
+           </div>
+           <div>
+            <h4 class="font-semibold">Seul(e)</h4>
+           </div>
+          </div>
+         </div>
+         <div class="selection-card" data-travel-with="couple">
+          <div class="flex items-center">
+           <div class="text-2xl mr-4">
+            💑
+           </div>
+           <div>
+            <h4 class="font-semibold">En couple</h4>
+           </div>
+          </div>
+         </div>
+         <div class="selection-card" data-travel-with="colocation">
+          <div class="flex items-center">
+           <div class="text-2xl mr-4">
+            🏘️
+           </div>
+           <div>
+            <h4 class="font-semibold">En colocation</h4>
+           </div>
+          </div>
+         </div>
+         <div class="selection-card" data-travel-with="family">
+          <div class="flex items-center">
+           <div class="text-2xl mr-4">
+            👪
+           </div>
+           <div>
+            <h4 class="font-semibold">En famille</h4>
+           </div>
+          </div>
+         </div>
+         <div class="selection-card" data-travel-with="other">
+          <div class="flex items-center">
+           <div class="text-2xl mr-4">
+            ✨
+           </div>
+           <div>
+            <h4 class="font-semibold">Autre</h4>
+           </div>
+          </div>
+         </div>
+        </div><!-- Champs conditionnels -->
+        <div class="mt-4 space-y-4">
+         <div class="hidden" id="colocation-details"><label class="block text-sm font-medium text-gray-700 mb-2">Préciser le nombre de colocataires qui voyagent avec vous</label> <input type="number" id="colocation-number" class="input-field" placeholder="Ex: 3" min="2" max="10">
+         </div>
+         <div class="hidden" id="other-travel-details"><label class="block text-sm font-medium text-gray-700 mb-2">À préciser</label> <input type="text" id="other-travel-description" class="input-field" placeholder="Ex: Avec des amis, groupe d'étudiants...">
+         </div>
+        </div>
+        <div class="error-message" id="travel-with-error">
+         Veuillez sélectionner avec qui vous voyagez
+        </div>
+       </div>
+       <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-4 required">Avez-vous un animal ?</h3>
+        <div class="flex gap-4"><label class="flex items-center cursor-pointer"> <input type="radio" name="has-pet" value="yes" class="mr-2"> <span>Oui</span> </label> <label class="flex items-center cursor-pointer"> <input type="radio" name="has-pet" value="no" class="mr-2"> <span>Non</span> </label>
+        </div>
+        <div class="error-message" id="has-pet-error">
+         Veuillez indiquer si vous avez un animal
+        </div>
+        <div class="hidden mt-4" id="pet-details">
+         <div class="space-y-4">
+          <div><label class="block text-sm font-medium text-gray-700 mb-2">Type d'animal</label> <select id="pet-type" class="input-field"> <option value="">Sélectionner</option> <option value="dog">Chien</option> <option value="cat">Chat</option> <option value="other">Autre</option> </select>
+          </div>
+          <div><label class="block text-sm font-medium text-gray-700 mb-2">Description</label> <textarea id="pet-description" class="textarea-field" placeholder="Ex: petit chien calme, gros chat indépendant..." style="min-height: 80px;"></textarea>
+          </div>
+          <div><label class="block text-sm font-medium text-gray-700 mb-2">Voyagez-vous avec votre animal ?</label>
+           <div class="flex gap-4"><label class="flex items-center cursor-pointer"> <input type="radio" name="travel-with-pet" value="yes" class="mr-2"> <span>Oui</span> </label> <label class="flex items-center cursor-pointer"> <input type="radio" name="travel-with-pet" value="no" class="mr-2"> <span>Non</span> </label>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div><!-- Profil idéal swapper avec IA -->
+       <div class="field-with-ai">
+        <h3 class="text-lg font-semibold text-gray-700 mb-4">👤 Profil idéal de mon swapper (facultatif)</h3>
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
+         <p class="text-sm text-blue-700">💡 <strong>Info :</strong> Ces critères sont purement indicatifs et apparaîtront dans votre annonce. &amp;SWAPP propose des matches basés sur la compatibilité, mais ces préférences ne sont pas éliminatoires.</p>
+        </div>
+        <div>
+         <div class="flex items-center justify-between mb-2"><label class="block text-sm font-medium text-gray-700">Description libre</label> <button type="button" class="text-sm text-gray-500 hover:text-green-600 transition-colors cursor-pointer" onclick="openSwapperAIModal()" title="Aide à la rédaction"> ⭐ Aide </button>
+         </div><textarea id="ideal-swapper-description" class="textarea-field" placeholder="Ex: Personne calme et respectueuse, amateur de culture, jeune professionnel..." style="min-height: 100px;" maxlength="300"></textarea>
+         <div class="character-count" id="ideal-swapper-count">
+          0/300 caractères
+         </div>
+        </div>
+        <div class="mt-4"><label class="block text-sm font-medium text-gray-700 mb-3">Tranche d'âge souhaitée</label>
+         <div class="grid grid-cols-2 md:grid-cols-4 gap-3"><label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" class="age-preference" value="18-25"> <span class="text-sm">18-25 ans</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" class="age-preference" value="26-35"> <span class="text-sm">26-35 ans</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" class="age-preference" value="36-50"> <span class="text-sm">36-50 ans</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" class="age-preference" value="50+"> <span class="text-sm">50+ ans</span> </label>
+         </div>
+        </div><!-- Modal aide IA pour profil swapper -->
+        <div id="swapper-ai-modal" class="modal">
+         <div class="modal-content max-w-2xl">
+          <h3 class="text-xl font-bold text-green-800 mb-4">⭐ Aide pour décrire votre swapper idéal</h3>
+          <p class="text-gray-600 mb-6">Répondez à quelques questions pour générer une description de votre profil swapper idéal</p>
+          <div class="space-y-4 mb-6">
+           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div><label class="block text-sm font-medium text-green-700 mb-2">Tranche d'âge préférée</label> <select id="modal-swapper-age" class="input-field text-sm"> <option value="">Peu importe</option> <option value="jeune">Jeune (18-30 ans)</option> <option value="adulte">Adulte (30-50 ans)</option> <option value="senior">Senior (50+ ans)</option> <option value="similaire">Similaire à mon âge</option> </select>
+            </div>
+            <div><label class="block text-sm font-medium text-green-700 mb-2">Style de voyageur recherché</label> <select id="modal-swapper-style" class="input-field text-sm"> <option value="">Choisir...</option> <option value="calme">Calme et respectueux</option> <option value="sociable">Sociable et ouvert</option> <option value="independant">Indépendant et discret</option> <option value="culturel">Amateur de culture</option> <option value="aventurier">Esprit aventurier</option> </select>
+            </div>
+            <div><label class="block text-sm font-medium text-green-700 mb-2">Situation professionnelle</label> <select id="modal-swapper-profession" class="input-field text-sm"> <option value="">Peu importe</option> <option value="etudiant">Étudiant</option> <option value="professionnel">Jeune professionnel</option> <option value="cadre">Cadre expérimenté</option> <option value="freelance">Freelance/Indépendant</option> <option value="retraite">Retraité actif</option> </select>
+            </div>
+            <div><label class="block text-sm font-medium text-green-700 mb-2">Centres d'intérêt</label> <select id="modal-swapper-interests" class="input-field text-sm"> <option value="">Choisir...</option> <option value="culture">Culture et musées</option> <option value="gastronomie">Gastronomie locale</option> <option value="nature">Nature et randonnée</option> <option value="art">Art et créativité</option> <option value="sport">Sport et activités</option> <option value="histoire">Histoire et patrimoine</option> </select>
+            </div>
+            <div><label class="block text-sm font-medium text-green-700 mb-2">Qualité importante</label> <select id="modal-swapper-quality" class="input-field text-sm"> <option value="">Choisir...</option> <option value="respectueux">Respectueux du logement</option> <option value="propre">Soigneux et propre</option> <option value="communicatif">Bon communicant</option> <option value="flexible">Flexible et adaptable</option> <option value="responsable">Responsable et fiable</option> </select>
+            </div>
+            <div><label class="block text-sm font-medium text-green-700 mb-2">Autre critère important</label> <input type="text" id="modal-swapper-other" class="input-field text-sm" placeholder="Ex: non-fumeur, avec expérience échange...">
+            </div>
+           </div>
+          </div>
+          <div class="flex gap-3 mb-4"><button class="btn-primary flex-1" onclick="generateSwapperProfileFromModal()" id="modal-swapper-generate-btn"> ✨ Générer ma description </button> <button class="btn-secondary" onclick="closeSwapperAIModal()"> Annuler </button>
+          </div><!-- Zone de résultat -->
+          <div id="swapper-ai-result" class="hidden mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+           <h4 class="font-semibold text-green-800 mb-2">🎉 Votre description générée :</h4>
+           <p id="swapper-ai-generated-text" class="text-gray-700 mb-3 leading-relaxed"></p>
+           <div class="flex gap-2"><button class="btn-primary text-sm" onclick="useGeneratedSwapperProfile()">Utiliser cette description</button> <button class="btn-secondary text-sm" onclick="regenerateSwapperProfile()">Générer une autre</button>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div><!-- Flexibilité recherchée -->
+       <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-4">🔄 Flexibilité recherchée</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3"><label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" class="flexibility-checkbox" value="dates"> <span class="text-sm">🗓️ Flexible sur les dates</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" class="flexibility-checkbox" value="duration"> <span class="text-sm">⏰ Flexible sur la durée</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" class="flexibility-checkbox" value="destination"> <span class="text-sm">📍 Flexible sur la destination</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" class="flexibility-checkbox" value="exchange-type"> <span class="text-sm">🔄 Flexible sur le type d'échange</span> </label>
+        </div>
+       </div>
+       <div class="flex justify-between"><button type="button" class="btn-secondary" onclick="goToStep(1)"> ← Retour </button> <button type="button" class="btn-primary" onclick="validateAndNext(2)"> Continuer → </button>
+       </div>
+      </div>
+     </div>
+    </div><!-- Étape 3: Création expérience -->
+    <div class="step-card hidden" id="step-3">
+     <div class="step-header">
+      <div class="emoji-large">
+       ✨
+      </div>
+      <h2 class="text-2xl font-bold mb-2">Création de mon expérience</h2>
+      <p class="text-green-100">Créons votre annonce d'échange attractive</p>
+     </div>
+     <div class="step-content">
+      <div class="space-y-6"><!-- Explication expérience &SWAPP -->
+       <div class="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg p-4">
+        <h3 class="font-semibold text-green-800 mb-2">🌟 Qu'est-ce qu'une expérience &amp;SWAPP ?</h3>
+        <p class="text-sm text-green-700 mb-3">Une expérience &amp;SWAPP, c'est votre projet d'échange personnalisé ! Vous définissez :</p>
+        <ul class="text-sm text-green-700 space-y-1 ml-4">
+         <li>• <strong>Votre destination</strong> : ville précise, région ou type de lieu</li>
+         <li>• <strong>Vos dates</strong> : périodes fixes ou flexibles selon vos envies</li>
+         <li>• <strong>Votre motivation</strong> : ce qui vous anime dans ce projet</li>
+        </ul>
+        <p class="text-sm text-green-700 mt-3">💡 Plus votre expérience est détaillée et authentique, plus vous attirerez des swappers compatibles !</p>
+       </div>
+       <div class="field-with-ai"><label for="main-destination" class="block text-sm font-medium text-gray-700 mb-2 required"> Destination souhaitée <span class="tooltip"> <span class="text-blue-500">ℹ️</span> <span class="tooltiptext">Choisissez votre destination de rêve ou laissez-vous surprendre !</span> </span> </label>
+        <div class="flex gap-2 mb-2"><input type="text" id="main-destination" class="input-field flex-1" placeholder="Ex: Barcelone, Tokyo, New York..." required> <button type="button" class="btn-ai" onclick="generateDestinationSuggestion()" id="destination-ai-btn" title="Aide IA pour destination"> ✨ Aide </button> <button type="button" class="btn-secondary px-3" onclick="openDestinationModal()" title="Surprends-moi !"> 🎲 Surprends-moi </button>
+        </div><!-- Villes disponibles sur &SWAPP -->
+        <div class="mb-3"><button type="button" class="btn-secondary text-sm" onclick="showAvailableCities()"> 🌍 Voir les villes disponibles sur &amp;SWAPP </button>
+        </div>
+        <div class="error-message" id="main-destination-error">
+         Veuillez saisir votre destination
+        </div><!-- Liste des villes disponibles -->
+        <div id="available-cities" class="hidden bg-gray-50 border border-gray-200 rounded-lg p-4 mt-3">
+         <h5 class="font-semibold text-gray-700 mb-3">🏙️ Villes populaires sur &amp;SWAPP</h5>
+         <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm"><button class="city-btn text-left p-2 rounded hover:bg-blue-100 transition-colors" onclick="selectCity('Paris (France)')">🇫🇷 Paris</button> <button class="city-btn text-left p-2 rounded hover:bg-blue-100 transition-colors" onclick="selectCity('Barcelone (Espagne)')">🇪🇸 Barcelone</button> <button class="city-btn text-left p-2 rounded hover:bg-blue-100 transition-colors" onclick="selectCity('Lisbonne (Portugal)')">🇵🇹 Lisbonne</button> <button class="city-btn text-left p-2 rounded hover:bg-blue-100 transition-colors" onclick="selectCity('Berlin (Allemagne)')">🇩🇪 Berlin</button> <button class="city-btn text-left p-2 rounded hover:bg-blue-100 transition-colors" onclick="selectCity('Rome (Italie)')">🇮🇹 Rome</button> <button class="city-btn text-left p-2 rounded hover:bg-blue-100 transition-colors" onclick="selectCity('Amsterdam (Pays-Bas)')">🇳🇱 Amsterdam</button> <button class="city-btn text-left p-2 rounded hover:bg-blue-100 transition-colors" onclick="selectCity('Londres (Royaume-Uni)')">🇬🇧 Londres</button> <button class="city-btn text-left p-2 rounded hover:bg-blue-100 transition-colors" onclick="selectCity('Madrid (Espagne)')">🇪🇸 Madrid</button> <button class="city-btn text-left p-2 rounded hover:bg-blue-100 transition-colors" onclick="selectCity('Copenhague (Danemark)')">🇩🇰 Copenhague</button> <button class="city-btn text-left p-2 rounded hover:bg-blue-100 transition-colors" onclick="selectCity('Stockholm (Suède)')">🇸🇪 Stockholm</button> <button class="city-btn text-left p-2 rounded hover:bg-blue-100 transition-colors" onclick="selectCity('New York (États-Unis)')">🇺🇸 New York</button> <button class="city-btn text-left p-2 rounded hover:bg-blue-100 transition-colors" onclick="selectCity('Montréal (Canada)')">🇨🇦 Montréal</button> <button class="city-btn text-left p-2 rounded hover:bg-blue-100 transition-colors" onclick="selectCity('Tokyo (Japon)')">🇯🇵 Tokyo</button> <button class="city-btn text-left p-2 rounded hover:bg-blue-100 transition-colors" onclick="selectCity('Sydney (Australie)')">🇦🇺 Sydney</button> <button class="city-btn text-left p-2 rounded hover:bg-blue-100 transition-colors" onclick="selectCity('Singapour (Singapour)')">🇸🇬 Singapour</button>
+         </div><button type="button" class="btn-secondary text-sm mt-3" onclick="hideAvailableCities()">Fermer</button>
+        </div>
+        <div class="ai-suggestion" id="destination-ai-suggestion">
+         <h4>🤖 Suggestions IA</h4>
+         <p id="destination-ai-text"></p><button type="button" onclick="useAISuggestion('main-destination', 'destination-ai-text')">Utiliser cette suggestion</button> <button type="button" onclick="hideAISuggestion('destination-ai-suggestion')">Fermer</button>
+        </div>
+       </div><!-- Titre avec IA -->
+       <div class="field-with-ai"><label for="experience-title" class="block text-sm font-medium text-gray-700 mb-2 required"> Titre de votre expérience <span class="tooltip"> <span class="text-blue-500">ℹ️</span> <span class="tooltiptext">Un titre accrocheur augmente vos chances de match !</span> </span> </label>
+        <div class="ai-button-container"><button type="button" class="btn-ai" onclick="generateExperienceTitle()" id="title-ai-btn"> <span class="ai-text">✨ Aide</span> </button>
+        </div><input type="text" id="experience-title" class="input-field" placeholder="Ex: Échange Paris ↔ Lisbonne - Découverte culturelle" required maxlength="100">
+        <div class="character-count" id="experience-title-count">
+         0/100 caractères
+        </div>
+        <div class="error-message" id="experience-title-error">
+         Veuillez saisir un titre pour votre expérience
+        </div>
+        <div class="ai-suggestion" id="title-ai-suggestion">
+         <h4>🤖 Suggestions IA</h4>
+         <p id="title-ai-text"></p><button type="button" onclick="useAISuggestion('experience-title', 'title-ai-text')">Utiliser cette suggestion</button> <button type="button" onclick="hideAISuggestion('title-ai-suggestion')">Fermer</button>
+        </div>
+       </div><!-- Description avec IA -->
+       <div class="field-with-ai"><label for="experience-description" class="block text-sm font-medium text-gray-700 mb-2 required"> Description de votre expérience <span class="tooltip"> <span class="text-blue-500">ℹ️</span> <span class="tooltiptext">Partagez vos motivations et ce que vous recherchez dans cet échange</span> </span> </label>
+        <div class="ai-button-container"><button type="button" class="btn-ai" onclick="generateExperienceDescription()" id="description-ai-btn"> <span class="ai-text">✨ Aide</span> </button>
+        </div><textarea id="experience-description" class="textarea-field" placeholder="Décrivez votre projet d'échange, vos motivations, ce que vous recherchez..." required maxlength="800"></textarea>
+        <div class="character-count" id="experience-description-count">
+         0/800 caractères
+        </div>
+        <div class="error-message" id="experience-description-error">
+         Veuillez décrire votre expérience
+        </div>
+        <div class="ai-suggestion" id="description-ai-suggestion">
+         <h4>🤖 Suggestions IA</h4>
+         <p id="description-ai-text"></p><button type="button" onclick="useAISuggestion('experience-description', 'description-ai-text')">Utiliser cette suggestion</button> <button type="button" onclick="hideAISuggestion('description-ai-suggestion')">Fermer</button>
+        </div>
+       </div>
+       <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-4 required">Dates souhaitées</h3>
+        <div id="date-ranges">
+         <div class="date-range bg-gray-50 border border-gray-200 rounded-lg p-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+           <div><label class="block text-sm font-medium text-gray-600 mb-2">Date de départ</label> <input type="date" id="date-start" class="input-field date-start" required>
+           </div>
+           <div><label class="block text-sm font-medium text-gray-600 mb-2">Date de retour</label> <input type="date" id="date-end" class="input-field date-end" required>
+           </div>
+          </div>
+         </div>
+        </div><button type="button" class="btn-secondary mt-3" onclick="addDateRange()"> ➕ Ajouter une autre plage de dates </button>
+        <div class="error-message" id="dates-error">
+         Veuillez sélectionner vos dates de voyage
+        </div>
+        <div class="mt-6">
+         <h4 class="text-md font-semibold text-gray-700 mb-3">Période flexible (facultatif)</h4>
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div><label class="block text-sm font-medium text-gray-600 mb-2">Durée souhaitée</label> <select class="input-field" id="flexible-duration"> <option value="">Sélectionner une durée</option> <option value="weekend">Un week-end</option> <option value="week">Une semaine</option> <option value="2weeks">Deux semaines</option> <option value="month">Un mois</option> <option value="flexible">Flexible</option> </select>
+          </div>
+          <div><label class="block text-sm font-medium text-gray-600 mb-2">Période générale</label> <input type="text" id="flexible-period" class="input-field" placeholder="Ex: été 2024, automne...">
+          </div>
+         </div>
+        </div>
+       </div><!-- Options flexibles destination -->
+       <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-4">🌍 Options flexibles (facultatif - sélection multiple possible)</h3>
+        <p class="text-sm text-gray-600 mb-4">💡 Ajouter des options flexibles augmente vos chances de match !</p>
+        <div class="space-y-3">
+         <div class="flexible-option bg-blue-50 border border-blue-200 rounded-lg p-4" data-flexible-type="region"><label class="flex items-center cursor-pointer"> <input type="checkbox" class="flexible-checkbox mr-3" value="region">
+           <div>
+            <h5 class="font-semibold">🌍 Région / zone géographique</h5>
+            <p class="text-sm text-gray-600">Ex: Sud de la France, Ouest canadien, à moins de 3h de vol de Washington</p>
+           </div></label>
+          <div class="mt-3 hidden" id="region-input"><input type="text" class="input-field" placeholder="Ex: Sud de l'amérique">
+          </div>
+         </div>
+         <div class="flexible-option bg-blue-50 border border-blue-200 rounded-lg p-4" data-flexible-type="cities"><label class="flex items-center cursor-pointer"> <input type="checkbox" class="flexible-checkbox mr-3" value="cities">
+           <div>
+            <h5 class="font-semibold">📍 Liste de 3 à 5 autres villes</h5>
+            <p class="text-sm text-gray-600">Ex: Barcelone, Rome, Porto, Séville, Madrid</p>
+           </div></label>
+          <div class="mt-3 hidden" id="cities-input">
+           <div class="grid grid-cols-1 md:grid-cols-2 gap-2"><input type="text" class="input-field" placeholder="Ville 1"> <input type="text" class="input-field" placeholder="Ville 2"> <input type="text" class="input-field" placeholder="Ville 3"> <input type="text" class="input-field" placeholder="Ville 4"> <input type="text" class="input-field" placeholder="Ville 5 (optionnel)">
+           </div>
+          </div>
+         </div>
+         <div class="flexible-option bg-blue-50 border border-blue-200 rounded-lg p-4" data-flexible-type="destination-type"><label class="flex items-center cursor-pointer"> <input type="checkbox" class="flexible-checkbox mr-3" value="destination-type">
+           <div>
+            <h5 class="font-semibold">☀️ Type de destination</h5>
+            <p class="text-sm text-gray-600">Ex: au soleil, en montagne, dans une capitale, ville culturelle</p>
+           </div></label>
+          <div class="mt-3 hidden" id="destination-type-input"><input type="text" class="input-field" placeholder="Ex: En montagne">
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="flex justify-between"><button type="button" class="btn-secondary" onclick="goToStep(2)"> ← Retour </button> <button type="button" class="btn-primary" onclick="validateAndNext(3)"> Continuer → </button>
+       </div>
+      </div>
+     </div>
+    </div><!-- Étape 4: Infos personnelles -->
+    <div class="step-card hidden" id="step-4">
+     <div class="step-header">
+      <div class="emoji-large">
+       👤
+      </div>
+      <h2 class="text-2xl font-bold mb-2">Mes informations personnelles</h2>
+      <p class="text-green-100">Finalisez votre profil</p>
+     </div>
+     <div class="step-content">
+      <div class="space-y-6"><!-- Informations de base -->
+       <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-4">👤 Informations de base</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+         <div><label for="first-name" class="block text-sm font-medium text-gray-700 mb-2 required">Prénom</label> <input type="text" id="first-name" class="input-field" placeholder="Marie" required>
+          <div class="error-message" id="first-name-error">
+           Veuillez saisir votre prénom
+          </div>
+         </div>
+         <div><label for="last-name" class="block text-sm font-medium text-gray-700 mb-2 required">Nom</label> <input type="text" id="last-name" class="input-field" placeholder="Dupont" required>
+          <div class="error-message" id="last-name-error">
+           Veuillez saisir votre nom
+          </div>
+         </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+         <div><label for="email" class="block text-sm font-medium text-gray-700 mb-2 required">Email</label> <input type="email" id="email" class="input-field" placeholder="marie@example.com" required>
+          <div class="error-message" id="email-error">
+           Veuillez saisir un email valide
+          </div>
+         </div>
+         <div><label for="age" class="block text-sm font-medium text-gray-700 mb-2 required">Âge</label> <input type="number" id="age" class="input-field" placeholder="28" min="18" max="99" required>
+          <div class="error-message" id="age-error">
+           Veuillez saisir votre âge (18-99 ans)
+          </div>
+         </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+         <div><label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Téléphone (WhatsApp)</label> <input type="tel" id="phone" class="input-field" placeholder="+33 6 12 34 56 78">
+         </div>
+         <div><label for="vie-company" class="block text-sm font-medium text-gray-700 mb-2">Société V.I.E (facultatif)</label> <input type="text" id="vie-company" class="input-field" placeholder="Ex: Airbus, Total, BNP Paribas...">
+         </div>
+        </div>
+       </div><!-- Présentation personnelle avec IA -->
+       <div class="field-with-ai">
+        <div class="flex items-center justify-between mb-2"><label for="personal-presentation" class="block text-sm font-medium text-gray-700"> Présentation personnelle (facultatif) <span class="tooltip"> <span class="text-blue-500">ℹ️</span> <span class="tooltiptext">Partagez qui vous êtes pour créer une connexion avec vos futurs swappers</span> </span> </label> <button type="button" class="text-sm text-gray-500 hover:text-green-600 transition-colors cursor-pointer" onclick="openPresentationAIModal()" title="Aide à la rédaction"> ⭐ Aide </button>
+        </div><textarea id="personal-presentation" class="textarea-field" placeholder="Parlez de vous : vos passions, votre travail, ce qui vous anime..." maxlength="400"></textarea>
+        <div class="character-count" id="personal-presentation-count">
+         0/400 caractères
+        </div>
+       </div><!-- Style de séjour et motivations -->
+       <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-4">💫 Mon style et mes motivations</h3><!-- Pourquoi j'échange -->
+        <div class="mb-6">
+         <h4 class="text-md font-semibold text-gray-700 mb-3">💭 Pourquoi j'échange (2 choix max)</h4>
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-3"><label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" class="reason-checkbox" value="change-air"> <span class="text-sm">🌬️ Changer d'air / télétravailler ailleurs</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" class="reason-checkbox" value="culture"> <span class="text-sm">🌍 Découvrir une autre culture</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" class="reason-checkbox" value="break"> <span class="text-sm">😌 Faire une pause / un break</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" class="reason-checkbox" value="family"> <span class="text-sm">👨‍👩‍👧‍👦 Rejoindre des proches</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="checkbox" class="reason-checkbox" value="climate"> <span class="text-sm">☀️ Profiter d'un climat différent</span> </label>
+         </div>
+         <div class="mt-4"><label class="block text-sm font-medium text-gray-700 mb-2">Autre raison</label> <input type="text" id="other-reason" class="input-field" placeholder="Précisez votre motivation...">
+         </div>
+        </div><!-- Style de séjour -->
+        <div class="mb-6">
+         <h4 class="text-md font-semibold text-gray-700 mb-3">🌈 Mon style de séjour (1 choix max)</h4>
+         <div class="space-y-3">
+          <div class="selection-card" data-stay-style="calm">
+           <div class="flex items-center">
+            <div class="text-2xl mr-4">
+             🧘
+            </div>
+            <div>
+             <h5 class="font-semibold">Calme &amp; reposant</h5>
+            </div>
+           </div>
+          </div>
+          <div class="selection-card" data-stay-style="dynamic">
+           <div class="flex items-center">
+            <div class="text-2xl mr-4">
+             🎉
+            </div>
+            <div>
+             <h5 class="font-semibold">Dynamique &amp; festif</h5>
+            </div>
+           </div>
+          </div>
+          <div class="selection-card" data-stay-style="immersive">
+           <div class="flex items-center">
+            <div class="text-2xl mr-4">
+             🏛️
+            </div>
+            <div>
+             <h5 class="font-semibold">Immersif &amp; local</h5>
+            </div>
+           </div>
+          </div>
+          <div class="selection-card" data-stay-style="work">
+           <div class="flex items-center">
+            <div class="text-2xl mr-4">
+             💻
+            </div>
+            <div>
+             <h5 class="font-semibold">Télétravail &amp; routine</h5>
+            </div>
+           </div>
+          </div>
+          <div class="selection-card" data-stay-style="nature">
+           <div class="flex items-center">
+            <div class="text-2xl mr-4">
+             🌲
+            </div>
+            <div>
+             <h5 class="font-semibold">Nature &amp; extérieur</h5>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div><!-- Type de voyageur -->
+       <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-4">✈️ Quel voyageur je suis</h3>
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
+         <p class="text-sm text-blue-700">💡 <strong>Info :</strong> Ces informations sont purement indicatives pour informer vos futurs swappers. Elles ne bloquent aucun échange potentiel ! Vous pouvez sélectionner plusieurs profils.</p>
+        </div>
+        <div class="space-y-3">
+         <div class="selection-card traveler-type-card" data-traveler-type="strict-planner">
+          <div class="flex items-center">
+           <div class="text-2xl mr-4">
+            🗓️
+           </div>
+           <div>
+            <h5 class="font-semibold">Le Planificateur strict</h5>
+            <p class="text-sm text-gray-600">Tout est calé longtemps à l'avance, agenda très organisé</p>
+           </div>
+          </div>
+         </div>
+         <div class="selection-card traveler-type-card" data-traveler-type="predictable">
+          <div class="flex items-center">
+           <div class="text-2xl mr-4">
+            📌
+           </div>
+           <div>
+            <h5 class="font-semibold">Le Prévisible</h5>
+            <p class="text-sm text-gray-600">Je prévois à l'avance mais garde des marges pour ajuster</p>
+           </div>
+          </div>
+         </div>
+         <div class="selection-card traveler-type-card" data-traveler-type="flexible">
+          <div class="flex items-center">
+           <div class="text-2xl mr-4">
+            🔄
+           </div>
+           <div>
+            <h5 class="font-semibold">Le Flexible</h5>
+            <p class="text-sm text-gray-600">Je sais quand je ne peux pas et je construis autour</p>
+           </div>
+          </div>
+         </div>
+         <div class="selection-card traveler-type-card" data-traveler-type="opportunist">
+          <div class="flex items-center">
+           <div class="text-2xl mr-4">
+            ⚡️
+           </div>
+           <div>
+            <h5 class="font-semibold">L'Opportuniste</h5>
+            <p class="text-sm text-gray-600">Je ne planifie pas mais je saisis les bonnes occasions</p>
+           </div>
+          </div>
+         </div>
+         <div class="selection-card traveler-type-card" data-traveler-type="spontaneous">
+          <div class="flex items-center">
+           <div class="text-2xl mr-4">
+            🌍
+           </div>
+           <div>
+            <h5 class="font-semibold">Le Spontané total</h5>
+            <p class="text-sm text-gray-600">Je décide presque uniquement à la dernière minute</p>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div><!-- Ce qu'il faut savoir sur moi -->
+       <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-4">🔑 Ce qu'il faut savoir sur moi</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+         <div><label class="block text-sm font-medium text-gray-700 mb-2">Fumeur</label>
+          <div class="flex gap-4"><label class="flex items-center cursor-pointer"> <input type="radio" name="smoker" value="yes" class="mr-2"> <span>Oui</span> </label> <label class="flex items-center cursor-pointer"> <input type="radio" name="smoker" value="no" class="mr-2"> <span>Non</span> </label>
+          </div>
+         </div>
+         <div><label class="block text-sm font-medium text-gray-700 mb-2">Télétravail</label>
+          <div class="flex gap-4"><label class="flex items-center cursor-pointer"> <input type="radio" name="remote-work" value="yes" class="mr-2"> <span>Oui</span> </label> <label class="flex items-center cursor-pointer"> <input type="radio" name="remote-work" value="no" class="mr-2"> <span>Non</span> </label>
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="flex justify-between"><button type="button" class="btn-secondary" onclick="goToStep(3)"> ← Retour </button> <button type="button" class="btn-primary" onclick="validateAndComplete()"> 🚀 Finaliser mon profil </button>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div><!-- Destination Modal -->
+  <div id="destination-modal" class="modal">
+   <div class="modal-content">
+    <div class="emoji-large">
+     🎲
+    </div>
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">Destination surprise !</h3>
+    <p class="text-gray-600 mb-6">Choisissez vos critères pour générer une destination au hasard</p>
+    <div class="space-y-4 mb-6">
+     <div>
+      <h4 class="font-semibold mb-2">🌈 Votre mood</h4>
+      <div class="grid grid-cols-3 gap-2"><button class="btn-secondary mood-btn" data-mood="sea">🏖️ Mer</button> <button class="btn-secondary mood-btn" data-mood="mountain">🏔️ Montagne</button> <button class="btn-secondary mood-btn" data-mood="city">🏙️ Ville</button>
+      </div>
+     </div>
+     <div>
+      <h4 class="font-semibold mb-2">🌍 Région du monde</h4>
+      <div class="grid grid-cols-2 gap-2"><button class="btn-secondary region-btn" data-region="europe">🇪🇺 Europe</button> <button class="btn-secondary region-btn" data-region="americas">🌎 Amériques</button> <button class="btn-secondary region-btn" data-region="asia-oceania">🌏 Asie/Océanie</button> <button class="btn-secondary region-btn" data-region="africa">🌍 Afrique</button>
+      </div>
+     </div>
+     <div>
+      <h4 class="font-semibold mb-2">✈️ Distance de voyage</h4>
+      <div class="grid grid-cols-2 gap-2"><button class="btn-secondary distance-btn" data-distance="proche">🚗 Proche (Europe)</button> <button class="btn-secondary distance-btn" data-distance="lointain">🛫 Lointain (Monde)</button>
+      </div>
+     </div>
+    </div>
+    <div class="flex gap-2"><button class="btn-primary flex-1" onclick="generateDestination()" id="generate-destination-btn"> 🎲 Générer ma destination surprise </button> <button class="btn-secondary" onclick="closeDestinationModal()"> Annuler </button>
+    </div><!-- Zone de résultat -->
+    <div id="destination-result" class="hidden mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-center">
+     <h4 class="font-semibold text-yellow-800 mb-2">🎉 Votre destination surprise :</h4>
+     <p id="generated-destination" class="text-lg font-bold text-gray-800 mb-3"></p>
+     <div class="flex gap-2 justify-center"><button class="btn-primary text-sm" onclick="useGeneratedDestination()">Utiliser cette destination</button> <button class="btn-secondary text-sm" onclick="regenerateDestination()">Générer une autre</button>
+     </div>
+    </div>
+   </div>
+  </div><!-- Success Modal -->
+  <div id="success-modal" class="modal">
+   <div class="modal-content">
+    <div class="emoji-large">
+     🎉
+    </div>
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">Félicitations !</h3>
+    <p class="text-gray-600 mb-6">Votre profil &amp;SWAPP a été créé avec succès !</p>
+    <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+     <h4 class="font-semibold text-green-800 mb-2">🎯 Prochaines étapes :</h4>
+     <ul class="text-sm text-green-700 space-y-1">
+      <li>📸 Ajout de vos photos (logement + profil)</li>
+      <li>✅ Validation de votre profil par notre équipe</li>
+      <li>🔍 Recherche de matches compatibles</li>
+      <li>💬 Premiers contacts avec vos swappers potentiels</li>
+     </ul>
+    </div><button class="btn-primary" onclick="closeModal()"> Parfait ! </button>
+   </div>
+  </div>
+  <script>
+        let currentStep = 1;
+        let selectedExchangeStyle = null;
+        let selectedTravelWith = null;
+        let selectedStayStyle = null;
+        let selectedTravelerType = null;
+        let dateRangeCount = 1;
+        let selectedMood = null;
+        let selectedRegion = null;
+        let selectedDistance = null;
+
+        // Base de données des destinations par région et mood
+        const destinations = {
+            europe: {
+                city: ['Paris (France)', 'Bruxelles (Belgique)', 'Luxembourg (Luxembourg)', 'Madrid (Espagne)', 'Barcelone (Espagne)', 'Lisbonne (Portugal)', 'Berlin (Allemagne)'],
+                sea: ['Barcelone (Espagne)', 'Lisbonne (Portugal)', 'Tarragone (Espagne)'],
+                mountain: ['Ski (Norvège)', 'Copenhague (Danemark)']
+            },
+            americas: {
+                city: ['New York (États-Unis)', 'Boston (États-Unis)', 'Chicago (États-Unis)', 'Los Angeles (États-Unis)', 'Montréal (Canada)', 'Toronto (Canada)', 'Mexico City (Mexique)', 'São Paulo (Brésil)', 'Rio de Janeiro (Brésil)'],
+                sea: ['Miami (États-Unis)', 'Playa del Carmen (Mexique)', 'Rio de Janeiro (Brésil)', 'Santo Domingo (République Dominicaine)'],
+                mountain: ['Seattle (États-Unis)', 'Belo Horizonte (Brésil)']
+            },
+            'asia-oceania': {
+                city: ['Singapour (Singapour)', 'Sydney (Australie)', 'Mumbai (Inde)', 'Chandigarh (Inde)'],
+                sea: ['Sydney (Australie)', 'Singapour (Singapour)'],
+                mountain: ['Chandigarh (Inde)']
+            },
+            africa: {
+                city: ['Libreville (Gabon)', 'Accra (Ghana)'],
+                sea: ['Libreville (Gabon)', 'Accra (Ghana)'],
+                mountain: ['Accra (Ghana)']
+            }
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress();
+            setupEventListeners();
+            setupCharacterCounters();
+        });
+
+        function setupEventListeners() {
+            // Selection cards
+            document.addEventListener('click', function(e) {
+                const card = e.target.closest('.selection-card');
+                if (card) {
+                    if (card.getAttribute('data-exchange-style')) {
+                        document.querySelectorAll('[data-exchange-style]').forEach(c => c.classList.remove('selected'));
+                        card.classList.add('selected');
+                        selectedExchangeStyle = card.getAttribute('data-exchange-style');
+                        clearError('exchange-style');
+                        
+                        // Gérer l'affichage des dates de disponibilité
+                        const availabilitySection = document.getElementById('availability-section');
+                        if (selectedExchangeStyle === 'delayed' || selectedExchangeStyle === 'both') {
+                            availabilitySection.classList.remove('hidden');
+                            // Rendre les champs requis
+                            document.getElementById('availability-start').required = true;
+                            document.getElementById('availability-end').required = true;
+                        } else {
+                            availabilitySection.classList.add('hidden');
+                            // Retirer l'obligation
+                            document.getElementById('availability-start').required = false;
+                            document.getElementById('availability-end').required = false;
+                        }
+                    }
+                    
+                    if (card.getAttribute('data-travel-with')) {
+                        document.querySelectorAll('[data-travel-with]').forEach(c => c.classList.remove('selected'));
+                        card.classList.add('selected');
+                        selectedTravelWith = card.getAttribute('data-travel-with');
+                        clearError('travel-with');
+                        
+                        // Gérer les champs conditionnels
+                        document.getElementById('colocation-details').classList.add('hidden');
+                        document.getElementById('other-travel-details').classList.add('hidden');
+                        
+                        if (selectedTravelWith === 'colocation') {
+                            document.getElementById('colocation-details').classList.remove('hidden');
+                        } else if (selectedTravelWith === 'other') {
+                            document.getElementById('other-travel-details').classList.remove('hidden');
+                        }
+                    }
+
+                    if (card.getAttribute('data-stay-style')) {
+                        document.querySelectorAll('[data-stay-style]').forEach(c => c.classList.remove('selected'));
+                        card.classList.add('selected');
+                        selectedStayStyle = card.getAttribute('data-stay-style');
+                    }
+
+                    if (card.getAttribute('data-traveler-type')) {
+                        // Permettre la sélection multiple pour les types de voyageur
+                        if (card.classList.contains('traveler-type-card')) {
+                            card.classList.toggle('selected');
+                            // Pas de variable selectedTravelerType unique, on gère un array
+                        } else {
+                            document.querySelectorAll('[data-traveler-type]').forEach(c => c.classList.remove('selected'));
+                            card.classList.add('selected');
+                            selectedTravelerType = card.getAttribute('data-traveler-type');
+                        }
+                    }
+                }
+            });
+
+            // Flexible options
+            document.addEventListener('change', function(e) {
+                if (e.target.classList.contains('flexible-checkbox')) {
+                    const option = e.target.closest('.flexible-option');
+                    const inputDiv = option.querySelector('div[id$="-input"]');
+                    
+                    if (e.target.checked) {
+                        option.classList.add('selected');
+                        inputDiv.classList.remove('hidden');
+                    } else {
+                        option.classList.remove('selected');
+                        inputDiv.classList.add('hidden');
+                    }
+                }
+            });
+
+            // Pet details
+            document.addEventListener('change', function(e) {
+                if (e.target.name === 'has-pet') {
+                    document.getElementById('pet-details').classList.toggle('hidden', e.target.value !== 'yes');
+                    clearError('has-pet');
+                }
+            });
+
+            // Reason checkboxes (max 2)
+            document.addEventListener('change', function(e) {
+                if (e.target.classList.contains('reason-checkbox')) {
+                    const checked = document.querySelectorAll('.reason-checkbox:checked');
+                    if (checked.length > 2) {
+                        e.target.checked = false;
+                        showNotification('Vous pouvez sélectionner maximum 2 raisons', 'error');
+                    }
+                }
+            });
+
+            // Clear errors on input
+            document.addEventListener('input', function(e) {
+                if (e.target.classList.contains('input-field') || e.target.classList.contains('textarea-field')) {
+                    clearError(e.target.id);
+                }
+            });
+
+            document.addEventListener('change', function(e) {
+                if (e.target.name === 'has-pet') {
+                    clearError('has-pet');
+                }
+            });
+        }
+
+        function setupCharacterCounters() {
+            const fieldsWithCounters = [
+                { field: 'housing-description', counter: 'housing-description-count', max: 500 },
+                { field: 'ideal-swapper-description', counter: 'ideal-swapper-count', max: 300 },
+                { field: 'experience-title', counter: 'experience-title-count', max: 100 },
+                { field: 'experience-description', counter: 'experience-description-count', max: 800 },
+                { field: 'personal-presentation', counter: 'personal-presentation-count', max: 400 }
+            ];
+
+            fieldsWithCounters.forEach(({ field, counter, max }) => {
+                const fieldElement = document.getElementById(field);
+                const counterElement = document.getElementById(counter);
+                
+                if (fieldElement && counterElement) {
+                    fieldElement.addEventListener('input', function() {
+                        const length = this.value.length;
+                        counterElement.textContent = `${length}/${max} caractères`;
+                        
+                        counterElement.classList.remove('warning', 'error');
+                        if (length > max * 0.9) {
+                            counterElement.classList.add('warning');
+                        }
+                        if (length > max) {
+                            counterElement.classList.add('error');
+                        }
+                    });
+                }
+            });
+        }
+
+        // Modal Functions
+        function openHousingAIModal() {
+            document.getElementById('housing-ai-modal').classList.add('show');
+        }
+
+        function closeHousingAIModal() {
+            document.getElementById('housing-ai-modal').classList.remove('show');
+            document.getElementById('housing-ai-result').classList.add('hidden');
+        }
+
+        function openSwapperAIModal() {
+            document.getElementById('swapper-ai-modal').classList.add('show');
+        }
+
+        function closeSwapperAIModal() {
+            document.getElementById('swapper-ai-modal').classList.remove('show');
+            document.getElementById('swapper-ai-result').classList.add('hidden');
+        }
+
+        async function generateSwapperProfileFromModal() {
+            const btn = document.getElementById('modal-swapper-generate-btn');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<span class="loading-spinner"></span> Génération...';
+            btn.disabled = true;
+            
+            try {
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                const age = document.getElementById('modal-swapper-age').value;
+                const style = document.getElementById('modal-swapper-style').value;
+                const profession = document.getElementById('modal-swapper-profession').value;
+                const interests = document.getElementById('modal-swapper-interests').value;
+                const quality = document.getElementById('modal-swapper-quality').value;
+                const other = document.getElementById('modal-swapper-other').value;
+                
+                let ageText = '';
+                switch(age) {
+                    case 'jeune': ageText = 'jeune personne dynamique'; break;
+                    case 'adulte': ageText = 'personne expérimentée'; break;
+                    case 'senior': ageText = 'personne mature et sage'; break;
+                    case 'similaire': ageText = 'personne d\'âge similaire au mien'; break;
+                    default: ageText = 'personne';
+                }
+                
+                let styleText = '';
+                switch(style) {
+                    case 'calme': styleText = 'calme et respectueuse'; break;
+                    case 'sociable': styleText = 'sociable et ouverte aux échanges'; break;
+                    case 'independant': styleText = 'indépendante et discrète'; break;
+                    case 'culturel': styleText = 'passionnée de culture'; break;
+                    case 'aventurier': styleText = 'à l\'esprit aventurier'; break;
+                    default: styleText = 'bienveillante';
+                }
+                
+                let professionText = '';
+                switch(profession) {
+                    case 'etudiant': professionText = ', idéalement étudiant(e)'; break;
+                    case 'professionnel': professionText = ', jeune professionnel(le) de préférence'; break;
+                    case 'cadre': professionText = ', cadre expérimenté(e)'; break;
+                    case 'freelance': professionText = ', freelance ou indépendant(e)'; break;
+                    case 'retraite': professionText = ', retraité(e) actif(ve)'; break;
+                    default: professionText = '';
+                }
+                
+                let interestsText = '';
+                switch(interests) {
+                    case 'culture': interestsText = ' Amateur de culture et de musées'; break;
+                    case 'gastronomie': interestsText = ' Passionné(e) de gastronomie locale'; break;
+                    case 'nature': interestsText = ' Amoureux(se) de nature et de randonnée'; break;
+                    case 'art': interestsText = ' Sensible à l\'art et à la créativité'; break;
+                    case 'sport': interestsText = ' Sportif(ve) et actif(ve)'; break;
+                    case 'histoire': interestsText = ' Passionné(e) d\'histoire et de patrimoine'; break;
+                    default: interestsText = '';
+                }
+                
+                let qualityText = '';
+                switch(quality) {
+                    case 'respectueux': qualityText = ', qui saura respecter mon logement'; break;
+                    case 'propre': qualityText = ', soigneux(se) et propre'; break;
+                    case 'communicatif': qualityText = ', bon(ne) communicant(e)'; break;
+                    case 'flexible': qualityText = ', flexible et adaptable'; break;
+                    case 'responsable': qualityText = ', responsable et fiable'; break;
+                    default: qualityText = '';
+                }
+                
+                let otherText = other ? `. ${other}` : '';
+                
+                const suggestion = `Je recherche une ${ageText} ${styleText}${professionText}${qualityText}.${interestsText}, qui partage l'esprit du voyage authentique et des échanges enrichissants${otherText}.`;
+                
+                document.getElementById('swapper-ai-generated-text').textContent = suggestion;
+                document.getElementById('swapper-ai-result').classList.remove('hidden');
+                
+            } catch (error) {
+                showNotification('Erreur lors de la génération. Veuillez réessayer.', 'error');
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        function useGeneratedSwapperProfile() {
+            const generatedText = document.getElementById('swapper-ai-generated-text').textContent;
+            document.getElementById('ideal-swapper-description').value = generatedText;
+            document.getElementById('ideal-swapper-description').dispatchEvent(new Event('input'));
+            closeSwapperAIModal();
+            showNotification('Description appliquée ! Vous pouvez la modifier si besoin.', 'success');
+        }
+
+        function regenerateSwapperProfile() {
+            generateSwapperProfileFromModal();
+        }
+
+        function openTitleAIModal() {
+            document.getElementById('title-ai-modal').classList.add('show');
+        }
+
+        function closeTitleAIModal() {
+            document.getElementById('title-ai-modal').classList.remove('show');
+        }
+
+        function openDescriptionAIModal() {
+            document.getElementById('description-ai-modal').classList.add('show');
+        }
+
+        function closeDescriptionAIModal() {
+            document.getElementById('description-ai-modal').classList.remove('show');
+        }
+
+        function openPresentationAIModal() {
+            document.getElementById('presentation-ai-modal').classList.add('show');
+        }
+
+        function closePresentationAIModal() {
+            document.getElementById('presentation-ai-modal').classList.remove('show');
+        }
+
+        // AI Generation Functions
+        async function generateHousingDescriptionFromModal() {
+            const btn = document.getElementById('modal-housing-generate-btn');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<span class="loading-spinner"></span> Génération...';
+            btn.disabled = true;
+            
+            try {
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                const city = document.getElementById('city').value || 'ma ville';
+                const housingType = document.getElementById('housing-type').value;
+                const ambiance = document.getElementById('modal-housing-ambiance').value;
+                const strength = document.getElementById('modal-housing-strength').value;
+                const neighborhood = document.getElementById('modal-housing-neighborhood').value;
+                const special = document.getElementById('modal-housing-special').value;
+                const unique = document.getElementById('modal-housing-unique').value;
+                const activities = document.getElementById('modal-housing-activities').value;
+                
+                let typeText = '';
+                switch(housingType) {
+                    case 'apartment': typeText = 'appartement'; break;
+                    case 'house': typeText = 'maison'; break;
+                    case 'room': typeText = 'chambre'; break;
+                    case 'shared': typeText = 'colocation'; break;
+                    default: typeText = 'logement';
+                }
+                
+                let ambianceText = '';
+                switch(ambiance) {
+                    case 'moderne': ambianceText = 'moderne et épuré'; break;
+                    case 'cosy': ambianceText = 'cosy et chaleureux'; break;
+                    case 'lumineux': ambianceText = 'lumineux et spacieux'; break;
+                    case 'authentique': ambianceText = 'authentique plein de charme'; break;
+                    case 'design': ambianceText = 'design et contemporain'; break;
+                    default: ambianceText = 'confortable';
+                }
+                
+                let strengthText = '';
+                switch(strength) {
+                    case 'vue': strengthText = 'avec une belle vue'; break;
+                    case 'localisation': strengthText = 'idéalement situé'; break;
+                    case 'calme': strengthText = 'dans un environnement très calme'; break;
+                    case 'transport': strengthText = 'proche de tous les transports'; break;
+                    case 'espace': strengthText = 'offrant beaucoup d\'espace'; break;
+                    case 'terrasse': strengthText = 'avec terrasse/balcon'; break;
+                    default: strengthText = 'parfaitement équipé';
+                }
+                
+                let neighborhoodText = '';
+                switch(neighborhood) {
+                    case 'centre': neighborhoodText = 'au cœur du centre-ville animé'; break;
+                    case 'residentiel': neighborhoodText = 'dans un quartier résidentiel calme'; break;
+                    case 'branche': neighborhoodText = 'dans un quartier branché et culturel'; break;
+                    case 'authentique': neighborhoodText = 'dans un quartier authentique et local'; break;
+                    case 'nature': neighborhoodText = 'proche de la nature'; break;
+                    default: neighborhoodText = 'dans un excellent quartier';
+                }
+                
+                let specialText = special ? ` Bonus : ${special} !` : '';
+                let uniqueText = unique ? ` ${unique}.` : '';
+                let activitiesText = activities ? ` À proximité : ${activities}.` : '';
+                
+                const suggestion = `${typeText.charAt(0).toUpperCase() + typeText.slice(1)} ${ambianceText} ${strengthText} ${neighborhoodText} de ${city}.${uniqueText} Parfait pour découvrir la ville tout en profitant d'un cadre de vie exceptionnel !${specialText}${activitiesText}`;
+                
+                document.getElementById('housing-ai-generated-text').textContent = suggestion;
+                document.getElementById('housing-ai-result').classList.remove('hidden');
+                
+            } catch (error) {
+                showNotification('Erreur lors de la génération. Veuillez réessayer.', 'error');
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        function useGeneratedHousingDescription() {
+            const generatedText = document.getElementById('housing-ai-generated-text').textContent;
+            document.getElementById('housing-description').value = generatedText;
+            document.getElementById('housing-description').dispatchEvent(new Event('input'));
+            closeHousingAIModal();
+            showNotification('Description appliquée ! Vous pouvez la modifier si besoin.', 'success');
+        }
+
+        function regenerateHousingDescription() {
+            generateHousingDescriptionFromModal();
+        }
+
+        async function generateHousingDescriptionWithInputs() {
+            const btn = document.getElementById('housing-ai-btn');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<span class="loading-spinner"></span> Génération...';
+            btn.disabled = true;
+            
+            try {
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                const city = document.getElementById('city').value || 'ma ville';
+                const housingType = document.getElementById('housing-type').value;
+                const ambiance = document.getElementById('housing-ambiance').value;
+                const strength = document.getElementById('housing-strength').value;
+                const neighborhood = document.getElementById('housing-neighborhood').value;
+                const special = document.getElementById('housing-special').value;
+                
+                let typeText = '';
+                switch(housingType) {
+                    case 'apartment': typeText = 'appartement'; break;
+                    case 'house': typeText = 'maison'; break;
+                    case 'room': typeText = 'chambre'; break;
+                    case 'shared': typeText = 'colocation'; break;
+                    default: typeText = 'logement';
+                }
+                
+                let ambianceText = '';
+                switch(ambiance) {
+                    case 'moderne': ambianceText = 'moderne et épuré'; break;
+                    case 'cosy': ambianceText = 'cosy et chaleureux'; break;
+                    case 'lumineux': ambianceText = 'lumineux et spacieux'; break;
+                    case 'authentique': ambianceText = 'authentique plein de charme'; break;
+                    case 'design': ambianceText = 'design et contemporain'; break;
+                    default: ambianceText = 'confortable';
+                }
+                
+                let strengthText = '';
+                switch(strength) {
+                    case 'vue': strengthText = 'avec une belle vue'; break;
+                    case 'localisation': strengthText = 'idéalement situé'; break;
+                    case 'calme': strengthText = 'dans un environnement très calme'; break;
+                    case 'transport': strengthText = 'proche de tous les transports'; break;
+                    case 'espace': strengthText = 'offrant beaucoup d\'espace'; break;
+                    case 'terrasse': strengthText = 'avec terrasse/balcon'; break;
+                    default: strengthText = 'parfaitement équipé';
+                }
+                
+                let neighborhoodText = '';
+                switch(neighborhood) {
+                    case 'centre': neighborhoodText = 'au cœur du centre-ville animé'; break;
+                    case 'residentiel': neighborhoodText = 'dans un quartier résidentiel calme'; break;
+                    case 'branche': neighborhoodText = 'dans un quartier branché et culturel'; break;
+                    case 'authentique': neighborhoodText = 'dans un quartier authentique et local'; break;
+                    case 'nature': neighborhoodText = 'proche de la nature'; break;
+                    default: neighborhoodText = 'dans un excellent quartier';
+                }
+                
+                let specialText = special ? ` Bonus : ${special} !` : '';
+                
+                const suggestion = `${typeText.charAt(0).toUpperCase() + typeText.slice(1)} ${ambianceText} ${strengthText} ${neighborhoodText} de ${city}. Parfait pour découvrir la ville tout en profitant d'un cadre de vie exceptionnel !${specialText}`;
+                
+                document.getElementById('housing-ai-text').textContent = suggestion;
+                document.getElementById('housing-ai-suggestion').classList.add('show');
+                
+            } catch (error) {
+                showNotification('Erreur lors de la génération. Veuillez réessayer.', 'error');
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        function showHousingExamples() {
+            document.getElementById('housing-examples-modal').classList.add('show');
+        }
+
+        function closeHousingExamples() {
+            document.getElementById('housing-examples-modal').classList.remove('show');
+        }
+
+        function copyExample(text) {
+            document.getElementById('housing-description').value = text.replace(/"/g, '');
+            document.getElementById('housing-description').dispatchEvent(new Event('input'));
+            closeHousingExamples();
+            showNotification('Exemple copié ! Vous pouvez le modifier à votre guise.', 'success');
+        }
+
+        function showAvailableCities() {
+            document.getElementById('available-cities').classList.remove('hidden');
+        }
+
+        function hideAvailableCities() {
+            document.getElementById('available-cities').classList.add('hidden');
+        }
+
+        function selectCity(cityName) {
+            document.getElementById('main-destination').value = cityName;
+            hideAvailableCities();
+            showNotification(`Destination sélectionnée : ${cityName}`, 'success');
+        }
+
+        async function generateIdealSwapperProfile() {
+            const btn = document.getElementById('swapper-ai-btn');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<span class="loading-spinner"></span> Génération...';
+            btn.disabled = true;
+            
+            try {
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                const suggestions = [
+                    "Personne respectueuse et soigneuse, qui saura prendre soin de mon logement comme du sien. Idéalement quelqu'un de curieux et ouvert, qui apprécie les échanges culturels authentiques.",
+                    "Swapper calme et responsable, amateur de découvertes locales. Je recherche quelqu'un qui partage l'esprit du voyage slow et qui respecte l'environnement de vie.",
+                    "Personne bienveillante et communicative, qui aime partager ses expériences de voyage. Idéal si vous êtes passionné par la culture locale et les rencontres humaines."
+                ];
+                
+                const randomSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
+                
+                document.getElementById('swapper-ai-text').textContent = randomSuggestion;
+                document.getElementById('swapper-ai-suggestion').classList.add('show');
+                
+            } catch (error) {
+                showNotification('Erreur lors de la génération. Veuillez réessayer.', 'error');
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        async function generateExperienceTitle() {
+            const btn = document.getElementById('title-ai-btn');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<span class="loading-spinner"></span> Génération...';
+            btn.disabled = true;
+            
+            try {
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                const city = document.getElementById('city').value || 'Ma ville';
+                const destination = document.getElementById('main-destination').value || 'Destination de rêve';
+                
+                const suggestions = [
+                    `Échange ${city} ↔ ${destination} - Découverte authentique`,
+                    `${city} vers ${destination} - Aventure culturelle`,
+                    `Swap ${city}/${destination} - Immersion locale`,
+                    `Échange de logements ${city} - ${destination} - Voyage unique`
+                ];
+                
+                const randomSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
+                
+                document.getElementById('title-ai-text').textContent = randomSuggestion;
+                document.getElementById('title-ai-suggestion').classList.add('show');
+                
+            } catch (error) {
+                showNotification('Erreur lors de la génération. Veuillez réessayer.', 'error');
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        async function generateExperienceDescription() {
+            const btn = document.getElementById('description-ai-btn');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<span class="loading-spinner"></span> Génération...';
+            btn.disabled = true;
+            
+            try {
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                const destination = document.getElementById('main-destination').value || 'cette magnifique destination';
+                const city = document.getElementById('city').value || 'ma ville';
+                
+                const suggestions = [
+                    `Passionné(e) de voyages authentiques, je rêve de découvrir ${destination} en vivant comme un local ! En échange, je vous ouvre les portes de ${city} et partage mes bonnes adresses. Recherche un échange basé sur la confiance mutuelle et l'envie de créer des souvenirs inoubliables.`,
+                    `Après avoir exploré de nombreux pays, ${destination} reste sur ma liste de rêve ! Je propose un échange chaleureux où chacun découvre une nouvelle culture. Mon logement à ${city} vous attend pour une expérience immersive. Échange idéal pour les amoureux de découvertes authentiques.`,
+                    `Envie de m'évader et de découvrir ${destination} sous un angle différent ! Je cherche un échange convivial avec quelqu'un qui partage la même passion du voyage. En retour, je vous fais découvrir les trésors cachés de ${city}. Parfait pour une aventure humaine enrichissante !`
+                ];
+                
+                const randomSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
+                
+                document.getElementById('description-ai-text').textContent = randomSuggestion;
+                document.getElementById('description-ai-suggestion').classList.add('show');
+                
+            } catch (error) {
+                showNotification('Erreur lors de la génération. Veuillez réessayer.', 'error');
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        async function generatePersonalPresentation() {
+            const btn = document.getElementById('presentation-ai-btn');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<span class="loading-spinner"></span> Génération...';
+            btn.disabled = true;
+            
+            try {
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                const age = document.getElementById('age').value;
+                const city = document.getElementById('city').value || 'ma ville';
+                
+                const suggestions = [
+                    `Curieux(se) de nature et passionné(e) de découvertes, j'aime explorer de nouveaux horizons tout en partageant des moments authentiques. Basé(e) à ${city}, je jongle entre travail et aventures. Toujours prêt(e) à échanger sur les cultures, la gastronomie et les bons plans voyage !`,
+                    `Amateur(trice) de voyages et de rencontres humaines, je crois que les plus belles expériences naissent des échanges spontanés. Quand je ne voyage pas, j'explore les trésors de ${city}. J'adore partager mes découvertes et apprendre des autres !`,
+                    `Esprit ouvert et bienveillant, je vois chaque voyage comme une opportunité d'enrichissement mutuel. Installé(e) à ${city}, je cultive l'art de vivre local tout en gardant l'âme d'un(e) explorateur(trice). Hâte de découvrir votre univers !`
+                ];
+                
+                const randomSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
+                
+                document.getElementById('presentation-ai-text').textContent = randomSuggestion;
+                document.getElementById('presentation-ai-suggestion').classList.add('show');
+                
+            } catch (error) {
+                showNotification('Erreur lors de la génération. Veuillez réessayer.', 'error');
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        async function generateDestinationSuggestion() {
+            const btn = document.getElementById('destination-ai-btn');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<span class="loading-spinner"></span> Génération...';
+            btn.disabled = true;
+            
+            try {
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                const city = document.getElementById('city').value || 'votre ville';
+                const country = document.getElementById('country').value;
+                
+                // Suggestions basées sur des destinations populaires &SWAPP
+                const suggestions = [
+                    'Barcelone (Espagne)',
+                    'Lisbonne (Portugal)', 
+                    'Berlin (Allemagne)',
+                    'Rome (Italie)',
+                    'Amsterdam (Pays-Bas)',
+                    'Copenhague (Danemark)',
+                    'Prague (République tchèque)',
+                    'Vienne (Autriche)',
+                    'Budapest (Hongrie)',
+                    'Stockholm (Suède)',
+                    'New York (États-Unis)',
+                    'Montréal (Canada)',
+                    'Tokyo (Japon)',
+                    'Sydney (Australie)',
+                    'Singapour (Singapour)'
+                ];
+                
+                // Éviter de suggérer le même pays si possible
+                let filteredSuggestions = suggestions;
+                if (country) {
+                    const countryNames = {
+                        'FR': 'France', 'ES': 'Espagne', 'IT': 'Italie', 'DE': 'Allemagne',
+                        'PT': 'Portugal', 'NL': 'Pays-Bas', 'DK': 'Danemark', 'CZ': 'République tchèque',
+                        'AT': 'Autriche', 'HU': 'Hongrie', 'SE': 'Suède', 'US': 'États-Unis',
+                        'CA': 'Canada', 'JP': 'Japon', 'AU': 'Australie', 'SG': 'Singapour'
+                    };
+                    const currentCountryName = countryNames[country];
+                    if (currentCountryName) {
+                        filteredSuggestions = suggestions.filter(dest => !dest.includes(currentCountryName));
+                    }
+                }
+                
+                const randomSuggestion = filteredSuggestions[Math.floor(Math.random() * filteredSuggestions.length)];
+                
+                document.getElementById('destination-ai-text').textContent = randomSuggestion;
+                document.getElementById('destination-ai-suggestion').classList.add('show');
+                
+            } catch (error) {
+                showNotification('Erreur lors de la génération. Veuillez réessayer.', 'error');
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        function useAISuggestion(fieldId, textId) {
+            const field = document.getElementById(fieldId);
+            const text = document.getElementById(textId).textContent;
+            
+            field.value = text;
+            field.dispatchEvent(new Event('input')); // Trigger character counter update
+            
+            // Hide suggestion
+            const suggestionId = textId.replace('-text', '-suggestion');
+            hideAISuggestion(suggestionId);
+            
+            showNotification('Suggestion appliquée ! Vous pouvez la modifier si besoin.', 'success');
+        }
+
+        function hideAISuggestion(suggestionId) {
+            document.getElementById(suggestionId).classList.remove('show');
+        }
+
+        function validateAndNext(step) {
+            console.log(`Validation de l'étape ${step}`);
+            
+            // Validation temporairement désactivée pour faciliter la navigation
+            nextStep();
+            
+            // Code de validation original (temporairement commenté)
+            /*
+            if (validateStep(step)) {
+                console.log(`Étape ${step} validée, passage à l'étape suivante`);
+                nextStep();
+            } else {
+                console.log(`Étape ${step} non validée`);
+                showNotification('Veuillez remplir tous les champs obligatoires', 'error');
+            }
+            */
+        }
+
+        function validateStep(step) {
+            let isValid = true;
+            
+            switch(step) {
+                case 1:
+                    isValid = validateField('country') && isValid;
+                    isValid = validateField('city') && isValid;
+                    isValid = validateField('region') && isValid;
+                    isValid = validateField('postal-code') && isValid;
+                    isValid = validateField('bedrooms') && isValid;
+                    isValid = validateField('sleeping-spots') && isValid;
+                    isValid = validateField('housing-type') && isValid;
+                    isValid = validateField('surface') && isValid;
+                    isValid = validateField('housing-description') && isValid;
+                    
+                    // Valider les dates de disponibilité seulement si nécessaires
+                    if (selectedExchangeStyle === 'delayed' || selectedExchangeStyle === 'both') {
+                        isValid = validateField('availability-start') && isValid;
+                        isValid = validateField('availability-end') && isValid;
+                        
+                        // Vérifier que la date de fin de disponibilité est après la date de début
+                        const availabilityStart = document.getElementById('availability-start').value;
+                        const availabilityEnd = document.getElementById('availability-end').value;
+                        if (availabilityStart && availabilityEnd && new Date(availabilityEnd) <= new Date(availabilityStart)) {
+                            showError('availability', 'La date de fin doit être après la date de début');
+                            isValid = false;
+                        }
+                    }
+                    break;
+                    
+                case 2:
+                    if (!selectedExchangeStyle) {
+                        showError('exchange-style', 'Veuillez sélectionner un style d\'échange');
+                        isValid = false;
+                    }
+                    if (!selectedTravelWith) {
+                        showError('travel-with', 'Veuillez sélectionner avec qui vous voyagez');
+                        isValid = false;
+                    }
+                    const hasPet = document.querySelector('input[name="has-pet"]:checked');
+                    if (!hasPet) {
+                        showError('has-pet', 'Veuillez indiquer si vous avez un animal');
+                        isValid = false;
+                    }
+                    break;
+                    
+                case 3:
+                    isValid = validateField('main-destination') && isValid;
+                    isValid = validateField('experience-title') && isValid;
+                    isValid = validateField('experience-description') && isValid;
+                    isValid = validateField('date-start') && isValid;
+                    isValid = validateField('date-end') && isValid;
+                    
+                    // Vérifier que la date de fin est après la date de début
+                    const startDate = document.getElementById('date-start').value;
+                    const endDate = document.getElementById('date-end').value;
+                    if (startDate && endDate && new Date(endDate) <= new Date(startDate)) {
+                        showError('dates', 'La date de retour doit être après la date de départ');
+                        isValid = false;
+                    }
+                    break;
+                    
+                case 4:
+                    isValid = validateField('first-name') && isValid;
+                    isValid = validateField('last-name') && isValid;
+                    isValid = validateEmailField('email') && isValid;
+                    isValid = validateAgeField('age') && isValid;
+                    break;
+            }
+            
+            return isValid;
+        }
+
+        function validateField(fieldId) {
+            const field = document.getElementById(fieldId);
+            const value = field.value.trim();
+            
+            if (!value) {
+                showError(fieldId, `Ce champ est obligatoire`);
+                return false;
+            }
+            
+            clearError(fieldId);
+            return true;
+        }
+
+        function validateEmailField(fieldId) {
+            const field = document.getElementById(fieldId);
+            const value = field.value.trim();
+            
+            if (!value) {
+                showError(fieldId, 'L\'email est obligatoire');
+                return false;
+            }
+            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(value)) {
+                showError(fieldId, 'Veuillez saisir un email valide');
+                return false;
+            }
+            
+            clearError(fieldId);
+            return true;
+        }
+
+        function validateAgeField(fieldId) {
+            const field = document.getElementById(fieldId);
+            const value = parseInt(field.value);
+            
+            if (!field.value.trim()) {
+                showError(fieldId, 'L\'âge est obligatoire');
+                return false;
+            }
+            
+            if (isNaN(value) || value < 18 || value > 99) {
+                showError(fieldId, 'Veuillez saisir un âge valide (18-99 ans)');
+                return false;
+            }
+            
+            clearError(fieldId);
+            return true;
+        }
+
+        function showError(fieldId, message) {
+            const field = document.getElementById(fieldId);
+            const errorDiv = document.getElementById(fieldId + '-error');
+            
+            if (field) {
+                field.classList.add('error');
+            }
+            
+            if (errorDiv) {
+                errorDiv.textContent = message;
+                errorDiv.classList.add('show');
+            }
+        }
+
+        function clearError(fieldId) {
+            const field = document.getElementById(fieldId);
+            const errorDiv = document.getElementById(fieldId + '-error');
+            
+            if (field) {
+                field.classList.remove('error');
+            }
+            
+            if (errorDiv) {
+                errorDiv.classList.remove('show');
+            }
+        }
+
+        function nextStep() {
+            if (currentStep < 4) {
+                document.getElementById(`step-${currentStep}`).classList.add('hidden');
+                currentStep++;
+                document.getElementById(`step-${currentStep}`).classList.remove('hidden');
+                updateProgress();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function goToStep(step) {
+            if (step >= 1 && step <= 4) {
+                document.getElementById(`step-${currentStep}`).classList.add('hidden');
+                currentStep = step;
+                document.getElementById(`step-${currentStep}`).classList.remove('hidden');
+                updateProgress();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function updateProgress() {
+            const progress = (currentStep / 4) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+            document.getElementById('current-step').textContent = currentStep;
+        }
+
+        function validateAndComplete() {
+            // Validation temporairement désactivée
+            const formData = collectAllFormData();
+            console.log('Profil complet créé:', formData);
+            showNotification('Profil créé avec succès !', 'success');
+            document.getElementById('success-modal').classList.add('show');
+            
+            // Code de validation original (temporairement commenté)
+            /*
+            if (validateStep(4)) {
+                const formData = collectAllFormData();
+                console.log('Profil complet créé:', formData);
+                showNotification('Profil créé avec succès !', 'success');
+                document.getElementById('success-modal').classList.add('show');
+            } else {
+                showNotification('Veuillez remplir tous les champs obligatoires', 'error');
+            }
+            */
+        }
+
+        function closeModal() {
+            document.getElementById('success-modal').classList.remove('show');
+        }
+
+        // Fonctions pour la destination surprise
+        function openDestinationModal() {
+            document.getElementById('destination-modal').classList.add('show');
+            selectedMood = null;
+            selectedRegion = null;
+            // Reset selections
+            document.querySelectorAll('.mood-btn, .region-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+        }
+
+        function closeDestinationModal() {
+            document.getElementById('destination-modal').classList.remove('show');
+        }
+
+        // Gestion des sélections dans le modal
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('mood-btn')) {
+                document.querySelectorAll('.mood-btn').forEach(btn => btn.classList.remove('selected'));
+                e.target.classList.add('selected');
+                selectedMood = e.target.getAttribute('data-mood');
+            }
+            
+            if (e.target.classList.contains('region-btn')) {
+                document.querySelectorAll('.region-btn').forEach(btn => btn.classList.remove('selected'));
+                e.target.classList.add('selected');
+                selectedRegion = e.target.getAttribute('data-region');
+            }
+        });
+
+        function generateDestination() {
+            if (!selectedMood || !selectedRegion) {
+                showNotification('Veuillez sélectionner un mood et une région', 'error');
+                return;
+            }
+
+            const regionDestinations = destinations[selectedRegion];
+            const moodDestinations = regionDestinations[selectedMood];
+            
+            if (!moodDestinations || moodDestinations.length === 0) {
+                showNotification('Aucune destination trouvée pour cette combinaison', 'error');
+                return;
+            }
+
+            const randomDestination = moodDestinations[Math.floor(Math.random() * moodDestinations.length)];
+            document.getElementById('main-destination').value = randomDestination;
+            
+            closeDestinationModal();
+            showNotification(`Destination générée : ${randomDestination} !`, 'success');
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg max-w-sm transition-all duration-300`;
+            
+            const styles = {
+                success: 'bg-green-500 text-white',
+                error: 'bg-red-500 text-white',
+                info: 'bg-blue-500 text-white'
+            };
+            
+            notification.className += ` ${styles[type] || styles.info}`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 4000);
+        }
+
+        function addDateRange() {
+            dateRangeCount++;
+            const dateRangesDiv = document.getElementById('date-ranges');
+            const newRange = document.createElement('div');
+            newRange.className = 'date-range bg-gray-50 border border-gray-200 rounded-lg p-4 mt-3';
+            newRange.innerHTML = `
+                <button type="button" class="remove-date-btn" onclick="removeDateRange(this)" title="Supprimer cette plage">
+                    ✕
+                </button>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-2">Date de départ</label>
+                        <input type="date" class="input-field date-start">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-2">Date de retour</label>
+                        <input type="date" class="input-field date-end">
+                    </div>
+                </div>
+            `;
+            dateRangesDiv.appendChild(newRange);
+        }
+
+        function addAvailabilityRange() {
+            const availabilityRangesDiv = document.getElementById('availability-ranges');
+            const newRange = document.createElement('div');
+            newRange.className = 'date-range bg-gray-50 border border-gray-200 rounded-lg p-4 mt-3';
+            newRange.innerHTML = `
+                <button type="button" class="remove-date-btn" onclick="removeAvailabilityRange(this)" title="Supprimer cette période">
+                    ✕
+                </button>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-2">Du</label>
+                        <input type="date" class="input-field availability-start">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-2">Au</label>
+                        <input type="date" class="input-field availability-end">
+                    </div>
+                </div>
+            `;
+            availabilityRangesDiv.appendChild(newRange);
+        }
+
+        function removeDateRange(button) {
+            const dateRange = button.closest('.date-range');
+            if (document.querySelectorAll('#date-ranges .date-range').length > 1) {
+                dateRange.remove();
+            } else {
+                showNotification('Vous devez garder au moins une plage de dates', 'warning');
+            }
+        }
+
+        function removeAvailabilityRange(button) {
+            const dateRange = button.closest('.date-range');
+            if (document.querySelectorAll('#availability-ranges .date-range').length > 1) {
+                dateRange.remove();
+            } else {
+                showNotification('Vous devez garder au moins une période de disponibilité', 'warning');
+            }
+        }
+
+        function collectAllFormData() {
+            const data = {
+                // Timestamp
+                timestamp: new Date().toISOString(),
+                
+                // === ÉTAPE 1 - APPARTEMENT ===
+                country: document.getElementById('country').value,
+                region: document.getElementById('region').value,
+                city: document.getElementById('city').value,
+                postalCode: document.getElementById('postal-code').value,
+                bedrooms: document.getElementById('bedrooms').value,
+                sleepingSpots: document.getElementById('sleeping-spots').value,
+                surface: document.getElementById('surface').value,
+                housingType: document.getElementById('housing-type').value,
+                housingDescription: document.getElementById('housing-description').value,
+                
+                // Équipements
+                equipment: Array.from(document.querySelectorAll('.equipment-checkbox:checked')).map(cb => cb.value),
+                otherEquipment: document.getElementById('other-equipment')?.value || '',
+                
+                // Obligations
+                obligations: Array.from(document.querySelectorAll('.obligation-checkbox:checked')).map(cb => cb.value),
+                otherObligations: document.getElementById('other-obligations')?.value || '',
+                
+                // Dates de disponibilité
+                availabilityRanges: Array.from(document.querySelectorAll('#availability-ranges .date-range')).map(range => ({
+                    start: range.querySelector('.availability-start').value,
+                    end: range.querySelector('.availability-end').value
+                })).filter(range => range.start && range.end),
+                
+                // === ÉTAPE 2 - STYLE D'ÉCHANGE ===
+                exchangeStyle: selectedExchangeStyle,
+                travelWith: selectedTravelWith,
+                colocationNumber: document.getElementById('colocation-number')?.value || '',
+                otherTravelDescription: document.getElementById('other-travel-description')?.value || '',
+                
+                // Animaux
+                hasPet: document.querySelector('input[name="has-pet"]:checked')?.value,
+                petType: document.getElementById('pet-type')?.value || '',
+                petDescription: document.getElementById('pet-description')?.value || '',
+                travelWithPet: document.querySelector('input[name="travel-with-pet"]:checked')?.value,
+                
+                // Profil swapper idéal
+                idealSwapperDescription: document.getElementById('ideal-swapper-description')?.value || '',
+                agePreferences: Array.from(document.querySelectorAll('.age-preference:checked')).map(cb => cb.value),
+                
+                // Flexibilité recherchée
+                flexibility: Array.from(document.querySelectorAll('.flexibility-checkbox:checked')).map(cb => cb.value),
+                
+                // === ÉTAPE 3 - EXPÉRIENCE ===
+                mainDestination: document.getElementById('main-destination').value,
+                flexibleDuration: document.getElementById('flexible-duration')?.value || '',
+                flexiblePeriod: document.getElementById('flexible-period')?.value || '',
+                experienceTitle: document.getElementById('experience-title').value,
+                experienceDescription: document.getElementById('experience-description').value,
+                
+                // Dates de voyage
+                dateRanges: Array.from(document.querySelectorAll('#date-ranges .date-range')).map(range => ({
+                    start: range.querySelector('.date-start').value,
+                    end: range.querySelector('.date-end').value
+                })).filter(range => range.start && range.end),
+                
+                // Options flexibles
+                flexibleOptions: {
+                    region: document.querySelector('[data-flexible-type="region"] .flexible-checkbox:checked') ? 
+                           document.querySelector('[data-flexible-type="region"] #region-input input')?.value : null,
+                    cities: document.querySelector('[data-flexible-type="cities"] .flexible-checkbox:checked') ? 
+                           Array.from(document.querySelectorAll('[data-flexible-type="cities"] #cities-input input')).map(input => input.value).filter(v => v.trim()) : [],
+                    destinationType: document.querySelector('[data-flexible-type="destination-type"] .flexible-checkbox:checked') ? 
+                                   document.querySelector('[data-flexible-type="destination-type"] #destination-type-input input')?.value : null
+                },
+                
+                // === ÉTAPE 4 - PROFIL PERSONNEL ===
+                firstName: document.getElementById('first-name').value,
+                lastName: document.getElementById('last-name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone')?.value || '',
+                age: document.getElementById('age').value,
+                vieCompany: document.getElementById('vie-company')?.value || '',
+                personalPresentation: document.getElementById('personal-presentation')?.value || '',
+                
+                // Motivations et style
+                reasons: Array.from(document.querySelectorAll('.reason-checkbox:checked')).map(cb => cb.value),
+                otherReason: document.getElementById('other-reason')?.value || '',
+                stayStyle: selectedStayStyle,
+                
+                // Infos personnelles
+                smoker: document.querySelector('input[name="smoker"]:checked')?.value,
+                remoteWork: document.querySelector('input[name="remote-work"]:checked')?.value
+            };
+
+            console.log('Données collectées:', data);
+            return data;
+        }
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'995b52eaf2b073b1',t:'MTc2MTY2Mzg0OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
